@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Multiverse on 37th</title>
+	<meta name="author" content="Katie Parlante">
+	
+	<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="/js/madtwitter.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		cycleRandom("{{ title }}", {{ animation }}, {{ page }});
+		
+		$("#add").click(function(e){
+			e.preventDefault();
+			$('div.stanza:first form').submit();
+		});
+		
+		$("#{{ title }}").css({"color":"white"});		
+	});
+	</script>
+	
+	<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>
+	
+	<style type="text/css">
+		body {
+			color: white;
+			background: black;
+		}
+	</style>
+	
+</head>
+<body>
+	<div id="top">
+	<h1><a href="/37thstreet/">MULTIVERSE ON 37TH</a></h1>
+	<p>An act of incidental collaboration by the twittering public.</p>
+	<p><a id="transit" href="/37thstreet/transit/">TRANSIT</a> | <a id="office" href="/37thstreet/office/">OFFICE</a> | <a id="aspiration" href="/37thstreet/aspiration/">ASPIRATION</a></p>
+	</div>
+	<div id="poem">
+	</div>
+	<div id="bottom">
+		<p><a href="/14thstreet/add/" id="add">I &hearts; this poem</a> | <a href="/14thstreet/best/">Favorites</a> | <a href="/14thstreet/about/">About</a></p>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Multiverse on The Highline</title>
+	<meta name="author" content="Katie Parlante">
+	
+	<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/highline.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" type="text/css"/>
+
+	<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui-1.8.14.custom.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.bxSlider.min.js"></script>
+	<script type="text/javascript" src="/js/mobile.detect.js"></script>
+	
+	<script type='text/javascript'>
+	$(document).ready(function(){
+ 		var slider = $("#carousel").bxSlider({
+ 			mode: 'fade',
+			auto: true,
+		    controls: false,
+		    pause: 5000,
+		});
+		
+	  // assign a click event to the external thumbnails
+ 	  $('.thumbs a').click(function(){
+	   var thumbIndex = $('.thumbs a').index(this);
+	    console.log(thumbIndex);
+	    // call the "goToSlide" public function
+	    slider.goToSlide(thumbIndex);
+	  
+	    // remove all active classes
+	    $('.thumbs a').removeClass('pager-active');
+	    // assisgn "pager-active" to clicked thumb
+	    $(this).addClass('pager-active');
+	    // very important! you must kill the links default behavior
+	    return false;
+	  });
+
+	  // assign "pager-active" class to the first thumb
+	  $('.thumbs a:first').addClass('pager-active');
+
+	});
+	
+	
+	</script>
+</head>
+
+<body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=131950203487112";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+	<div id="top">
+	<h1><a href="/">MULTIVERSE ON THE HIGHLINE</a></h1>
+	<p>3 STRANGERS : 3 TWEETS : 1 ACCIDENTAL POEM</p>
+	<p><a href="/transit/">TRANSIT</a> : <a href="/contemplation/">CONTEMPLATION</a> : <a href="/aspiration/">ASPIRATION</a></p>
+	</div>
+	<div id="about">
+		<div id=follow>Follow us on <a href="https://twitter.com/multivers_es">Twitter</a> : <a href=https://www.facebook.com/pages/Multiverse/244836708970327>Facebook</a><span class="fb-like" data-href="http://multivers.es/" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></span></div>
+		<div id=carouselContainer>
+			<ul id=carousel style="width: 800px; padding: 0px; margin: 0px;">
+				<li style="width: 800px; padding: 0px; margin: 10px 0;"><object width="800" height="600"> <param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631542683670%2Fshow%2F&page_show_back_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631542683670%2F&set_id=72157631542683670&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631542683670%2Fshow%2F&page_show_back_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631542683670%2F&set_id=72157631542683670&jump_to=" width="800" height="600"></embed></object></li>
+				<li style="width: 800px; padding: 0px; margin: 60px 0;"><iframe src="http://player.vimeo.com/video/49796598" width="800" height="449" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+				<li style="width: 800px; padding: 0px; margin: 10px 0;"><object width="800" height="600"> <param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631543145817%2Fshow%2F&page_show_back_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631543145817%2F&set_id=72157631543145817&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631543145817%2Fshow%2F&page_show_back_url=%2Fphotos%2F85567759%40N08%2Fsets%2F72157631543145817%2F&set_id=72157631543145817&jump_to=" width="800" height="600"></embed></object></li>
+				<li style="width: 800px; padding: 0px; margin: 60px 0;"><iframe src="http://player.vimeo.com/video/49272585" width="800" height="449" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></li>
+				</ul>
+			<div class="thumbs">
+ 				<a href=""><img src="/css/glowingeyes.png" width=100/></a>
+  				<a href=""><img src="/css/jump.png" width=100/></a>
+  				<a href=""><img src="/css/shadow.jpg" width=100/></a>
+  				<a href=""><img src="/css/hands-up.jpg" width=100/></a>
+			</div>			
+		</div>
+		
+		
+		<div style="display: inline; font-size: 32px;"><b>Chance Encounters on The Highline</b> presents an installation of <a href="http://multivers.es/" target=_blank>Multiverse</a> and <a href=#films>select short films</a> about crossing paths and not knowing it.<br><a href=#read>Read more</a><br><a href=#hours>Hours</a><br><a href=#press>Press</a></div> 
+		
+		<div style="clear: both;">
+		<a name=read></a>
+		<p><b style="font-size: 24px;">Multiverse</b><br>
+		<a href="http://multivers.es/" target=_blank>Multiverse</a> is a set of simple rules that bring 3 strangers from the tweeting public together to create a momentary, singular expression of desire, nostalgia, rumination and locomotion that evokes the city and the people in it. Multiverse generates a progression of 3-line poems with a predisposition for verbal accidents that take advantage of quirks in the English language and the bazaar of human emotion on display in the Twitter public feed. 
+		<p>Multiverse happens all the time at <a href="http://multivers.es/" target=_blank>here</a> and was created by Katie Parlante and <a href=http://degreesofchance.co>Mimi Yin</a>. 
+		
+		<p>The Chance Encounters installation as a whole plays with the tension between the tedium of complete unpredictability that is the perennial risk of pure chance operations and the banal predictability of formulaic composition. It asks: How do you create something authentically unplanned, unchoreographed, unpredictable without losing the essential arc and structure that we all need in order to make sense of our experiences?
+		
+		<p style="font-size: 24px;"><b>The Films</b><br>
+		<a name=films></a>
+		The short films are as much visual art pieces as they are dance and movement works and explorations in visualizing rhythm.
+		<p><b>Shadowlight</b> created by Mimi Yin and Craig Protzel is a sustained collision between a mostly still body and a wildly roving light. 
+		<p>The <b>White on White</b> films directed by Mimi Yin and featuring Maddy Bullard and Lulu Soni are studies in finding the tipping points inside movement, 
+		those moments adjacent to equilibrium when the body could go left or right, up or down. The films begin just before sunset, barely perceptible in broad daylight
+		and slowly come into view as the sky darkens and night arrives.
+		
+		<p style="font-size: 24px;"><b>When and Where</b><br>
+		<a name=hours></a>		
+		<p>Chance Encounters happen 100 feet west of the Highline between 19th and 20th Streets, every Friday and Saturday evening (weather permitting) from sunset to closing time starting Sept 21, 2012, ending Oct 13, 2012. Check our <a href=https://www.facebook.com/pages/Multiverse/244836708970327>Facebook page</a> for rain dates.</p>
+		<p>You can follow Multiverse on <a href=https://www.facebook.com/pages/Multiverse/244836708970327>Facebook</a> and <a href=https://twitter.com/multivers_es>Twitter</a>. You can contact us @ <b>info at multivers dot es</b>.
+
+		<p style="font-size: 24px;"><b>In the Press</b><br>
+		<a name=press></a>		
+		<p>Huffington Post: <a href=http://www.huffingtonpost.com/2012/09/05/chance-encounters-on-the-highline-twitter_n_1859056.html target=_blank>'Chance Encounters' Takes Your Boring Tweets And Makes Them Profound</a>
+		<p>&nbsp;
+		<p>&nbsp;
+		<p>&nbsp;
+		<p>&nbsp;
+		<p>&nbsp;
+		<p>Chance Encounters was made possible by The Department of Things Easily Broken if Not Properly Handled.
+		</div>
+		
+	</div>
+
+</body>
+</html>

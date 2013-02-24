@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Animation Lab</title>
+	<meta name="author" content="Katie Parlante">
+
+	<link href="/css/madtwitter.css" rel="stylesheet" type="text/css"/>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	
+	<style type="text/css">
+	a:link { text-decoration: none; }
+	a:visited { text-decoration: none; }
+	a:hover { text-decoration: underline; }
+	a:active { text-decoration: none; }
+
+	body {
+		background-color: black;
+		color: white;
+	}
+
+	.tweet {
+		font-size: 32px;
+	}
+
+	.waiting {
+		color: red;
+	}
+
+	.looking {
+		color: green;
+		margin-left: 40px;
+	}
+
+	.thinking {
+		color: blue;
+		margin-left: 80px;
+	}
+
+	.wondering {
+		color: purple;
+		margin-left: 120px;
+	}
+
+	.hoping {
+		color: orange;
+		margin-left: 160px;
+	}
+
+	.search {
+		font-size: 24px;
+	}
+
+	div.stanza {
+		position: absolute;
+		top: 100px;
+		margin-left: 10px;
+	}
+	</style>
+	
+	<script type="text/javascript">
+	function slideAnimation(element, callback) {
+		var divHeightPx = element.css("height");
+		var divHeight = element.height();
+		var newTop = divHeight + 100;
+		
+		element.css({opacity:1.0, height:0, top:newTop});
+	    element
+			.animate({height:divHeight, top:100}, "slow")
+			.animate({opacity:1.0}, 2000)
+			.animate({height:0}, "slow", function(){
+				$('.stanza').css({opacity:0.0, height:divHeightPx, top:100});
+				callback();
+			});
+	}
+	
+	function fadeSearchAnimation(element, callback) {
+		element
+			.fadeIn("slow")
+			.animate({opacity:1.0}, 3000, function(){
+				$(this).find('.search')
+				.animate({opacity:0}, 3000, function(){
+					$(this).parent().find('.tweet')
+					.animate({opacity:1.0}, 3000, function(){
+						$(this).animate({opacity:0}, "slow", function(){
+							if ($(this)[0] === $('.tweet:last')[0]) {
+								callback();
+							}
+						});
+					});
+				});
+			});
+	}
+		
+	function dropAnimation(element, callback) {
+		element.fadeIn("slow")
+			.animate({opacity:1.0}, 2000)
+			.animate({
+				opacity:0,
+				top: $(window).height() - element.height()
+			}, "slow", callback);
+	}
+	
+	function spantext(phrase) {
+		var newtext = "";
+		for (var i=0; i < phrase.length; i++) {
+			newtext = newtext.concat("<span class='letter'>" + phrase.charAt(i) + "</span>");
+		}
+		console.log(newtext);
+		return newtext;
+	}
+	
+	function fadeLetter(element, callback) {
+		var line = element.find('div:eq(3) .tweet');
+		var html = line.html();
+		
+		line.html(spantext(html));
+		
+		var seconds = 0;
+		
+		element.animate({opacity:1.0}, "slow")
+			.animate({opacity:1.0}, 2000, function(){
+				$(this).find("span.letter").animate({opacity:1.0}, 5, function(){
+					seconds = 100 + Math.floor(Math.random() * 3000);
+					$(this).animate({opacity:1.0}, seconds).animate({opacity:0}, "slow")
+				});
+				$(this).animate({opacity:1.0}, 4000).animate({opacity:0}, "slow", function(){
+					line.html(html);
+					callback();
+				});
+			});
+	}
+	
+	function fadeLines(element, callback) {		
+		element
+			.animate({opacity:1.0}, "slow")
+			.animate({opacity:1.0}, 3000, function(){
+				element.find('div:eq(0)').animate({opacity:0}, "slow", function(){
+					element.find('div:eq(3)').animate({opacity:0}, "slow", function(){
+						element.find('div:eq(2)').animate({opacity:0}, "slow", function(){
+							element.find('div:eq(1)').animate({opacity:0}, "slow", function(){
+								element.find('div:eq(4)').animate({opacity:0}, "slow", callback);
+							});
+						});
+					});
+				});
+				
+			});
+	}
+		
+	$(document).ready(function() {
+		$('.stanza').css({opacity:0});
+		
+		$('#drop').click(function(){
+			dropAnimation($('.stanza'), function(){
+				$('.stanza').css({top: 100});
+			});
+			return false;
+		});
+		
+		$('#fadeSearch').click(function(){
+			fadeSearchAnimation($('.stanza'), function(){
+				$('.stanza').css({opacity:0});
+				$('.tweet').css({opacity:1});
+				$('.search').css({opacity:1});
+			});
+			return false;
+		});
+		
+		$('#slide').click(function(){
+			slideAnimation($('.stanza'), function(){
+				console.log("end slide");
+			});
+			return false;
+		});
+		
+		$('#fadeLetter').click(function(){
+			fadeLetter($('.stanza'), function(){
+				$('span.letter').css({opacity:1.0});
+				console.log("end fade letter");
+			});
+			return false;
+		});
+
+		$('#fadeLines').click(function(){
+			fadeLines($('.stanza'), function(){
+				$('div.stanza').css({opacity:0});
+				$('div.phrase').css({opacity:1.0});
+			});
+			return false;
+		});
+
+
+	});
+	</script>
+	
+</head>
+<body>
+	<a href="/" id="drop">drop</a> | <a href="/" id="fadeLetter">fade letter</a> | <a href="/" id="slide">slide</a> | <a href="/" id="fadeSearch">fade tweet last</a> | <a href="/" id="fadeLines">fade lines</a>
+	<div class="stanza">
+		<div class="phrase"><span class="search waiting">waiting for</span> <span class="tweet">a bus</div>
+		<div class="phrase"><span class="search looking">looking at</span> <span class="tweet">my feet</span></div>
+		<div class="phrase"><span class="search thinking">thinking about</span> <span class="tweet">the bicycle</span></div>
+		<div class="phrase"><span class="search wondering">wondering why</span> <span class="tweet">the sky is blue</span></div>
+		<div class="phrase"><span class="search hoping">hoping for</span> <span class="tweet">some candy</span></div>	
+	</div>
+</body>
+</html>

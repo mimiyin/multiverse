@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Multiverse on The Highline</title>
+	<meta name="author" content="Katie Parlante">
+
+	<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/highline.css" rel="stylesheet" type="text/css"/>
+
+	<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="/js/mobile.detect.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".page{{ page_num }}").css({"color":"white"});
+	});
+	</script>
+</head>
+<body>
+	<div id="top">
+	<h1><a href="/">MULTIVERSE ON THE HIGHLINE</a></h1>
+	<p>3 STRANGERS : 3 TWEETS : 1 ACCIDENTAL POEM</p>
+	<p><a href="/transit/">TRANSIT</a> : <a href="/contemplation/">CONTEMPLATION</a> : <a href="/aspiration/">ASPIRATION</a> : <a href="/37thstreet/office/">OFFICE</a></p>
+		<div id="pages">
+			{% if stanzas.has_next %}
+				<a href="/best?page={{ stanzas.next_page_number }}">prev</a>
+			{% else %}
+				<a href="/best?page={{ page_num }}">prev</a>
+			{% endif %}
+					
+			{% for page in smart_range reversed %}
+				{% ifequal page "..." %}
+					...
+				{% else %}
+					<a class="page{{ page }}" href="/best?page={{ page }}">{{ page }}</a>
+				{% endifequal %}
+			{% endfor %}
+					
+			{% if stanzas.has_previous %}
+				<a href="/14thstreet/best?page={{ stanzas.previous_page_number }}">next</a>
+			{% else %}
+				<a href="/14thstreet/best?page={{ page_num }}">next</a>
+			{% endif %}
+		</div>
+	</div>
+	
+	
+	<div id="best">
+	{% for stanza in stanzas.object_list reversed %}
+<div class="stanza">
+	<div id="signature">
+		{{ stanza.created|date }} 
+		<a href="http://twitter.com/{{ stanza.user1 }}/statuses/{{ stanza.tweet_id1 }}">@{{ stanza.user1 }}</a>, 
+		<a href="http://twitter.com/{{ stanza.user2 }}/statuses/{{ stanza.tweet_id2 }}">@{{ stanza.user2 }}</a>, 
+		<a href="http://twitter.com/{{ stanza.user3 }}/statuses/{{ stanza.tweet_id3 }}">@{{ stanza.user3 }}</a>
+	</div>
+	<div class="phrase line1">
+		<span class="search">{{ stanza.search1 }}</span> <span class="tweet">{{ stanza.tweet1 }}</span>
+	</div>
+	<div class="phrase line2">
+		<span class="search">{{ stanza.search2 }}</span> <span class="tweet">{{ stanza.tweet2 }}</span>
+	</div>
+	<div class="phrase line3">
+		<span class="search">{{ stanza.search3 }}</span> <span class="tweet">{{ stanza.tweet3 }}</span>
+	</div>
+</div>	
+	<script type="text/javascript">
+		$("#best").css("margin", "50px " + ($(document).width() - $('#best').width())*.45 + "px")
+		</script>
+	
+	{% endfor %}
+	</div>
+		
+</body>
+</html>

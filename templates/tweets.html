@@ -1,0 +1,10 @@
+	{% for waiting, looking, thinking, wondering, hoping in tweets %}
+	<div class="stanza">
+		<div class="phrase"><span class="search waiting">waiting for</span> <span class="tweet">{{ waiting }}</span></div>
+		<div class="phrase"><span class="search looking">looking at</span> <span class="tweet">{{ looking }}</span></div>
+		<div class="phrase"><span class="search thinking">thinking about</span> <span class="tweet">{{ thinking }}</span></div>
+		<div class="phrase"><span class="search wondering">wondering why</span> <span class="tweet">{{ wondering }}</span></div>
+		<div class="phrase"><span class="search hoping">hoping for</span> <span class="tweet">{{ hoping }}</span></div>	
+	</div>
+	{% endfor %}
+

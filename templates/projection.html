@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>&nbsp;</title>
+	<meta name="author" content="Katie Parlante">
+	
+	<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="/js/madtwitter.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		cycleProjection("{{ title }}", {{ animation }}, {{ page }});
+		
+		$("#add").click(function(e){
+			e.preventDefault();
+			$('div.stanza:first form').submit();
+		});
+				
+	});
+	</script>
+	
+	<style type="text/css">
+		html {
+			overflow: hidden;
+		}
+
+		body {
+			background: black;
+			color: white;
+			overflow: hidden !important;
+		}
+				
+		p {
+		    margin:0;
+		    padding:0;
+		}
+		
+		div.stanza {
+		    font-family: "Georgia", serif;
+		    font-size: 64px;
+		    margin: 30px 0;
+		    padding: 0;
+		}
+
+		#poem {
+			margin-top: 200px;
+		}
+		
+		#headline {
+			float: left;
+			clear: both;
+			text-align: center; 
+			width: 100%;
+			height: auto;
+			margin-left: auto;
+			margin-right: auto;
+			font-family: "Calibri", sans-serif;
+		    font-size: 85px;
+		    position: absolute;
+		    top: 500px
+		}
+		
+		#subtitle {
+			position: absolute;
+			right: 120px;
+			bottom: 75px;
+			font-size: 42px;
+			opacity: .85;
+			font-family: "Calibri", sans-serif;
+		}
+		
+		#subtitle a {
+			color: inherit;
+			text-decoration: none;
+		}
+										
+	</style>
+	
+</head>
+<body>
+	<div id="poem"></div>
+	<div id="headline"></div>
+	
+	<div id="subtitle">#chance1920 :: <a href="/add/" id="add">multivers.es</a> :: Poems generated live from the Twitter Public Feed.</div>
+</body>
+</html>

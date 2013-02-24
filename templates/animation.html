@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Animation Lab</title>
+	<meta name="author" content="Katie Parlante">
+
+	<link href="/css/madtwitter.css" rel="stylesheet" type="text/css"/>
+	
+	<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="/js/madtwitter.js"></script>
+	
+	<script type="text/javascript">
+		
+	$(document).ready(function() {
+		$('.stanza').css({opacity:0});
+		
+		$('#drop').click(function(){
+			dropAnimation($('.stanza'), function(){
+				$('.stanza').css({top: 100});
+			});
+			return false;
+		});
+		
+		$('#fadeSearch').click(function(){
+			fadeSearchAnimation($('.stanza'), function(){
+				$('.stanza').css({opacity:0});
+				$('.tweet').css({opacity:1});
+				$('.search').css({opacity:1});
+			});
+			return false;
+		});
+		
+		$('#slide').click(function(){
+			slideAnimation($('.stanza'), function(){
+				console.log("end slide");
+			});
+			return false;
+		});
+		
+		$('#fadeLetter').click(function(){
+			fadeLetter($('.stanza'), function(){
+				console.log("end fade letter");
+			});
+			return false;
+		});
+
+		$('#fadeLines').click(function(){
+			fadeLines($('.stanza'), function(){
+				$('div.stanza').css({opacity:0});
+				$('div.phrase').css({opacity:1.0});
+			});
+			return false;
+		});
+		
+		$('#fountain').click(function(){
+			fountain($('.stanza'), function(){
+				console.log("end fountain");
+			});
+			return false;
+		});
+		
+		$('#sideways').click(function(){
+			sideways($('.stanza'), function(){
+				console.log("end sideways");
+			});
+			return false;
+		});
+		
+	});
+	</script>
+	
+</head>
+<body>
+	<a href="/" id="drop">drop</a> | <a href="/" id="fadeLetter">fade letter</a> | <a href="/" id="slide">slide</a> | <a href="/" id="fadeSearch">fade tweet last</a> | <a href="/" id="fadeLines">fade lines</a> | <a href="/" id="fountain">fountain</a> | <a href="/" id="sideways">sideways</a>
+	<div class="stanza">
+		<div class="phrase"><span class="search waiting">waiting for</span> <span class="tweet">a bus</div>
+		<div class="phrase"><span class="search looking">looking at</span> <span class="tweet">my feet</span></div>
+		<div class="phrase"><span class="search thinking">thinking about</span> <span class="tweet">the bicycle</span></div>
+	</div>
+</body>
+</html>

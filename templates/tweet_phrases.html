@@ -1,0 +1,7 @@
+{% for one, two, three in tweet_phrases %}
+<div class="stanza">
+	<div class="phrase"><span class="search one">{{ search_one }}</span> <span class="tweet">{{ one }}</span></div>
+	<div class="phrase"><span class="search two">{{ search_two }}</span> <span class="tweet">{{ two }}</span></div>
+	<div class="phrase"><span class="search three">{{ search_three }}</span> <span class="tweet">{{ three }}</span></div>
+</div>
+{% endfor %}
