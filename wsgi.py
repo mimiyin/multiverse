@@ -27,7 +27,7 @@ activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.
 execfile(activate_this, dict(__file__=activate_this))
 
 # Add to sys path
-sys.path = ['/home/capps/webapps/multiverse/madtwitter', '/home/capps/webapps/multiverse'] + sys.path
+sys.path = ['/home/capps/webapps/multiverse', '/home/capps/webapps/multiverse/madtwitter'] + sys.path
 
 # Calculate the path based on the location of the WSGI script
 project = '/home/capps/webapps/multiverse/madtwitter'
