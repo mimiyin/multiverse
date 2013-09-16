@@ -32,7 +32,7 @@ project = '/home/capps@114/webapps/multiverse/'
 workspace = os.path.dirname(project)
 sys.path.append(workspace)
 
-sys.path = ['/home/capps@114/webapps/multiverse/myproject/multiverse', '/home/capps@114/webapps/multiverse/myproject', '/home/capps@114/webapps/multiverse'] + sys.path
+sys.path = ['/home/capps@114/webapps/multiverse/myproject/myproject', '/home/capps@114/webapps/multiverse/myproject', '/home/capps@114/webapps/multiverse'] + sys.path
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
