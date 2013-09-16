@@ -1,6 +1,7 @@
 # Copyright (c) 2009 Katie Parlante
 
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -16,7 +17,32 @@ import simplejson
 import re
 import random
 
+import urllib
+import base64
+import httplib
+
+#import urlparse
+#import oauth2 as oauth
+
+import tweepy
+
 from madtwitter.app.models import Stanza
+
+def shake_hands(phrase):
+
+    consumer_key = 'UcAG75lm90EeO6F5VLGbPQ'
+    consumer_secret = 'UqZxtmpfq0qa2mybVL4GiJzIknroE9U4vrrmvJD0w'
+    
+    access_token="755697409-VuI4qRuBpI3mjGDLNagocq1YH6oZ3I5yhon7PWTp"
+    access_token_secret="3bnfPCNO8BoYKHHthEni2heYumSRrraxgwA8l05Wg"
+    
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)    
+    return api.search(q=phrase, rpp=100)
+
+
 
 def screen(alist):
     exp = re.compile(r'twitter|tweet|http|facebook|nigger|nigga|cunt|@|#|followers|rt|<3|lol', re.IGNORECASE)
@@ -33,19 +59,18 @@ def short_filter(phrase_list):
     return [p for p in phrase_list if len(p[1]) < 35]
 
 def fetch(phrase, page=1):
-    # Fetch 100 tweets at a time, the max the api allows
-    params = {'q': '"' + phrase + '"' + '+exclude:retweets', 'rpp' : 100, 'page' : page}
-               
-    query = urllib.urlencode(params)
+    phraselet = '"' + phrase + '"' + '+exclude:retweets'
+    all_results=shake_hands(phraselet)   
     
-    url = "http://search.twitter.com/search.json?%s" % query
-    all_results = simplejson.load(urllib.urlopen(url))
-    results = all_results['results']
-    since_id = all_results['max_id']
-    
+    results = []
+    for result in all_results:
+        results.append({'text' : result.text, 'from_user': result.user.screen_name, 'id' : result.id})
+        
+
     # Do the screening *after* we've picked the phrase out of the tweet -- in case the offending word was not in our selection
-    #return phrase_list(phrase, screen([(decode(entry['text']), entry['from_user'], entry['id']) for entry in results])) 
-    return screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
+    return phrase_list(phrase, screen([(decode(entry['text']), entry['from_user'], entry['id']) for entry in results])) 
+    #print screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
+    
     
     # diagnostics
     #total_list = screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
@@ -53,7 +78,6 @@ def fetch(phrase, page=1):
     #return total_list
     
 def tweets(request):
-    
     template_file = "tweets.html"
     
     waiting_for_list = fetch("waiting for")
@@ -87,6 +111,7 @@ def load_stanza(stanza_searches):
         group_list = []
         for search_phrase in search_group: 
             phrase_list = [(search_phrase, phrase, user, tweet_id) for (phrase, user, tweet_id) in fetch(search_phrase)]
+            
             if len(search_group) < 5:
                 phrase_list += [(search_phrase, phrase, user, tweet_id) for (phrase, user, tweet_id) in fetch(search_phrase, 2)]
             group_list += short_filter(phrase_list)
@@ -162,7 +187,7 @@ def random_stanzas(request, title, search_terms):
     else:
         request.session[title] = page + 1
         tweet_phrases = cache.get(title)
-        
+                
     if not tweet_phrases:
         tweet_phrases = load_stanza(search_terms)
         cache.set(title, tweet_phrases, 60*35)
@@ -290,7 +315,7 @@ def street(request, title="transit"):
         "page" : request.session.get(title, 0)
     }
     
-    return render_to_response("streetcycle.html", template_values)
+    return render_to_response("streetcycle.html", template_values, context_instance=RequestContext(request))
     
 def projection(request, title="transit"):
     
