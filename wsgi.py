@@ -21,7 +21,7 @@ site.addsitedir('/home/capps/.virtualenvs/multiverse/lib/python2.7/site-packages
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "multiverse.settings"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
 
 activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
