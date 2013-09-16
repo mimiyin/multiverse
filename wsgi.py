@@ -15,7 +15,7 @@ framework.
 """
 import os, sys, site
 
-site.addsitedir('/home/capps@114/.virtualenv/multiverse/lib/python2.7/site-packages')
+site.addsitedir('/home/capps@114/.virtualenvs/multiverse/lib/python2.7/site-packages')
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -23,7 +23,7 @@ site.addsitedir('/home/capps@114/.virtualenv/multiverse/lib/python2.7/site-packa
 # os.environ["DJANGO_SETTINGS_MODULE"] = "multiverse.settings"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "madtwitter.settings")
 
-activate_this = os.path.expanduser("~/.virtualenv/multiverse/bin/activate_this.py")
+activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
 
 # Calculate the path based on the location of the WSGI script
