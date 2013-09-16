@@ -15,7 +15,7 @@ framework.
 """
 import os, sys, site
 
-#site.addsitedir('/home/capps/.virtualenvs/multiverse/lib/python2.7/site-packages')
+site.addsitedir('/home/capps/.virtualenvs/multiverse/lib/python2.7/site-packages')
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -23,19 +23,16 @@ import os, sys, site
 # os.environ["DJANGO_SETTINGS_MODULE"] = "multiverse.settings"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "madtwitter.settings")
 
-#activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.py")
-#execfile(activate_this, dict(__file__=activate_this))
+activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.py")
+execfile(activate_this, dict(__file__=activate_this))
 
 # Calculate the path based on the location of the WSGI script
 project = '/home/capps/webapps/multiverse/myproject/madtwitter'
 
 workspace = os.path.dirname(project)
 sys.path.append(workspace)
-#sys.path.append('/home/capps/webapps/multiverse/myproject/madtwitter')
-#sys.path.append('/home/capps/webapps/multiverse/myproject')
-#sys.path.append('/home/capps/webapps/multiverse')
 
-#sys.path = ['/home/capps/webapps/multiverse/myproject/myproject', '/home/capps/webapps/multiverse/myproject', '/home/capps/webapps/multiverse'] + sys.path
+sys.path = ['/home/capps/webapps/multiverse/myproject/madtwitter', '/home/capps/webapps/multiverse/myproject', '/home/capps/webapps/multiverse'] + sys.path
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
