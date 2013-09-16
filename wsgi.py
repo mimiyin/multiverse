@@ -27,12 +27,12 @@ activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.
 execfile(activate_this, dict(__file__=activate_this))
 
 # Calculate the path based on the location of the WSGI script
-project = '/home/capps/webapps/multiverse/'
+project = '/home/capps/webapps/multiverse/myproject/myproject'
 
 workspace = os.path.dirname(project)
 sys.path.append(workspace)
-sys.path.append('/home/capps/webapps/multiverse/myproject/myproject')
-sys.path.append('/home/capps/webapps/multiverse/myproject/')
+sys.path.append('/home/capps/webapps/multiverse/myproject')
+sys.path.append('/home/capps/webapps/multiverse')
 
 #sys.path = ['/home/capps/webapps/multiverse/myproject/myproject', '/home/capps/webapps/multiverse/myproject', '/home/capps/webapps/multiverse'] + sys.path
 
