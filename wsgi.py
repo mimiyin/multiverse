@@ -26,13 +26,15 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "madtwitter.settings")
 activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
 
+# Add to sys path
+sys.path = ['/home/capps/webapps/multiverse/madtwitter', '/home/capps/webapps/multiverse'] + sys.path
+
 # Calculate the path based on the location of the WSGI script
-project = '/home/capps/webapps/multiverse/myproject/madtwitter'
+project = '/home/capps/webapps/multiverse/madtwitter'
 
 workspace = os.path.dirname(project)
 sys.path.append(workspace)
 
-sys.path = ['/home/capps/webapps/multiverse/myproject/madtwitter', '/home/capps/webapps/multiverse/myproject', '/home/capps/webapps/multiverse'] + sys.path
 
 print sys.path
 
