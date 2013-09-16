@@ -31,6 +31,7 @@ project = '/home/capps/webapps/multiverse/myproject/myproject'
 
 workspace = os.path.dirname(project)
 sys.path.append(workspace)
+sys.path.append('/home/capps/webapps/multiverse/myproject/myproject')
 sys.path.append('/home/capps/webapps/multiverse/myproject')
 sys.path.append('/home/capps/webapps/multiverse')
 
