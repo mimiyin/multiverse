@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 #DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-#DATABASE_NAME = '/home/capps/webapps/django/myproject/django.db'             # Or path to database file if using sqlite3.
+#DATABASE_NAME = '/home/capps/webapps/multiverse/myproject/madtwitter/django.db'             # Or path to database file if using sqlite3.
 #DATABASE_USER = ''             # Not used with sqlite3.
 #DATABASE_PASSWORD = ''         # Not used with sqlite3.
 #DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -19,7 +19,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/capps/webapps/django/myproject/django.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/home/capps/webapps/multiverse/myproject/madtwitter/django.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -30,11 +30,11 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': 'file:///home/capps/webapps/django/myproject/django_cache',
+        'LOCATION': 'file:///home/capps/webapps/multiverse/myproject/madtwitter/django_cache',
     }
 }
 
-#CACHE_BACKEND = "file:///home/capps/webapps/django/myproject/django_cache"
+#CACHE_BACKEND = "file:///home/capps/webapps/multiverse/myproject/madtwitter/django_cache"
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -108,7 +108,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_DIRS = (
-    '/home/capps/webapps/django/myproject/templates'
+    '/home/capps/webapps/multiverse/myproject/madtwitter/templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -130,10 +130,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'myproject.urls'
+ROOT_URLCONF = 'madtwitter.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'myproject.wsgi.application'
+WSGI_APPLICATION = 'madtwitter.wsgi.application'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -142,8 +142,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'myproject.app'
+    'madtwitter.app'
 )
 
 #Comment this out when updating server
-#from settings_local import *
+from settings_local import *
