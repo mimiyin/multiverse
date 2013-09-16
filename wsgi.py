@@ -15,7 +15,7 @@ framework.
 """
 import os, sys, site
 
-site.addsitedir('/home/capps@114/.virtualenvs/multiverse/lib/python2.7/site-packages')
+site.addsitedir('/home/capps/.virtualenvs/multiverse/lib/python2.7/site-packages')
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -27,12 +27,12 @@ activate_this = os.path.expanduser("~/.virtualenvs/multiverse/bin/activate_this.
 execfile(activate_this, dict(__file__=activate_this))
 
 # Calculate the path based on the location of the WSGI script
-project = '/home/capps@114/webapps/multiverse/'
+project = '/home/capps/webapps/multiverse/'
 
 workspace = os.path.dirname(project)
 sys.path.append(workspace)
 
-sys.path = ['/home/capps@114/webapps/multiverse/myproject/myproject', '/home/capps@114/webapps/multiverse/myproject', '/home/capps@114/webapps/multiverse'] + sys.path
+sys.path = ['/home/capps/webapps/multiverse/myproject/myproject', '/home/capps/webapps/multiverse/myproject', '/home/capps/webapps/multiverse'] + sys.path
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
