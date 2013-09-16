@@ -1,12 +1,12 @@
 import os
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.views.static import serve
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 
 urlpatterns = patterns('',
     # Example:
@@ -74,11 +74,11 @@ urlpatterns = patterns('',
     (r'^phrases/$', 'madtwitter.app.views.phrases'),
     (r'^lines/$', 'madtwitter.app.views.three_lines'),
     
-     (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),   
+     (r'^robots\.txt$',  TemplateView.as_view( template_name ='robots.txt'), 'robots'),   
     
-#    (r'^js/(.*)', serve,   
-#        {'document_root': os.path.join(os.path.dirname(__file__), "static")}),
-#    (r'^css/(.*)', serve,   
-#        {'document_root': os.path.join(os.path.dirname(__file__), "static")}),    
+    (r'^js/(.*)', serve,   
+        {'document_root': os.path.join(os.path.dirname(__file__), "static")}),
+    (r'^css/(.*)', serve,   
+        {'document_root': os.path.join(os.path.dirname(__file__), "static")}),    
 )
 
