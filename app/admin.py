@@ -1,6 +1,6 @@
 # Copyright (c) 2009 Katie Parlante
 
-from madtwitter.app.models import Stanza
+from multiverse.app.models import Stanza
 from django.contrib import admin
 
 class StanzaAdmin(admin.ModelAdmin):

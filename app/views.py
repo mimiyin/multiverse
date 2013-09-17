@@ -26,7 +26,7 @@ import httplib
 
 import tweepy
 
-from madtwitter.app.models import Stanza
+from multiverse.app.models import Stanza
 
 def shake_hands(phrase):
 
