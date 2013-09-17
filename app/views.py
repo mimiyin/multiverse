@@ -21,11 +21,7 @@ import urllib
 import base64
 import httplib
 
-#import urlparse
-#import oauth2 as oauth
-
 import tweepy
-
 from multiverse.app.models import Stanza
 
 def shake_hands(phrase):
