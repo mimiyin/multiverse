@@ -17,7 +17,6 @@ import simplejson
 import re
 import random
 
-import urllib
 import base64
 import httplib
 
