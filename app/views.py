@@ -396,7 +396,7 @@ def add_best(request):
         pass
     
     #return show_best(request);
-    return HttpResponseRedirect(reverse('madtwitter.app.views.show_best'))
+    return HttpResponseRedirect(reverse('multiverse.app.views.show_best'))
 
 def show_best(request):
         
