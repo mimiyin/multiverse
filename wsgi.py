@@ -21,6 +21,12 @@ import os
 # os.environ["DJANGO_SETTINGS_MODULE"] = "multiverse.settings"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "madtwitter.settings")
 
+sys.path.append('/home/capps/')
+sys.path.append('/home/capps/webapps/')
+sys.path.append('/home/capps/webapps/multiverse')
+sys.path.append('/home/capps/webapps/multiverse/myproject')
+sys.path.append('/home/capps/webapps/multiverse/myproject/madtwitter')
+
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
