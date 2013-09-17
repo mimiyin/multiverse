@@ -19,13 +19,7 @@ import os
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "multiverse.settings"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "madtwitter.settings")
-
-sys.path.append('/home/capps/')
-sys.path.append('/home/capps/webapps/')
-sys.path.append('/home/capps/webapps/multiverse')
-sys.path.append('/home/capps/webapps/multiverse/myproject')
-sys.path.append('/home/capps/webapps/multiverse/myproject/madtwitter')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "multiverse.settings")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

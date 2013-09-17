@@ -146,4 +146,4 @@ INSTALLED_APPS = (
 )
 
 #Comment this out when updating server
-from settings_local import *
+#from settings_local import *
