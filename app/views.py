@@ -28,34 +28,32 @@ def shake_hands(phrase):
     consumer_key = 'UcAG75lm90EeO6F5VLGbPQ'
     consumer_secret = 'UqZxtmpfq0qa2mybVL4GiJzIknroE9U4vrrmvJD0w'
     
-    access_token="755697409-VuI4qRuBpI3mjGDLNagocq1YH6oZ3I5yhon7PWTp"
-    access_token_secret="3bnfPCNO8BoYKHHthEni2heYumSRrraxgwA8l05Wg"
+    access_token = "755697409-VuI4qRuBpI3mjGDLNagocq1YH6oZ3I5yhon7PWTp"
+    access_token_secret = "3bnfPCNO8BoYKHHthEni2heYumSRrraxgwA8l05Wg"
     
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
-    api = tweepy.API(auth)    
-    return api.search(q=phrase, rpp=100)
-
-
+    api = tweepy.API(auth) 
+    return api.search(q=phrase, rpp=100)   
 
 def screen(alist):
     exp = re.compile(r'twitter|tweet|http|facebook|nigger|nigga|cunt|@|#|followers|rt|<3|lol', re.IGNORECASE)
-    return [(text,user,tweet_id) for (text,user,tweet_id) in alist if not exp.search(text)]
+    return [(text, user, tweet_id) for (text, user, tweet_id) in alist if not exp.search(text)]
     
 def decode(txt):
     return txt.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&').replace('&quot;', '"').replace('&#39;', "'")
     
 def phrase_list(phrase, clean_list):
     exp = re.compile(phrase + r' ([^,.!?:;()=~-]+)', re.IGNORECASE)
-    return [(m.group(1),user,tweet_id) for (m,user,tweet_id) in [(exp.search(item),user,tweet_id) for (item,user,tweet_id) in clean_list] if m]
+    return [(m.group(1), user, tweet_id) for (m, user, tweet_id) in [(exp.search(item), user, tweet_id) for (item, user, tweet_id) in clean_list] if m]
     
 def short_filter(phrase_list):
     return [p for p in phrase_list if len(p[1]) < 35]
 
 def fetch(phrase, page=1):
     phraselet = '"' + phrase + '"' + '+exclude:retweets'
-    all_results=shake_hands(phraselet)   
+    all_results = shake_hands(phraselet)   
     
     results = []
     for result in all_results:
@@ -64,13 +62,12 @@ def fetch(phrase, page=1):
 
     # Do the screening *after* we've picked the phrase out of the tweet -- in case the offending word was not in our selection
     return phrase_list(phrase, screen([(decode(entry['text']), entry['from_user'], entry['id']) for entry in results])) 
-    #print screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
-    
+    # print screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
     
     # diagnostics
-    #total_list = screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
-    #print url, " ", len(total_list), len([p for p in total_list if len(p[0]) < 35])
-    #return total_list
+    # total_list = screen(phrase_list(phrase, [(decode(entry['text']), entry['from_user'], entry['id']) for entry in results]))
+    # print url, " ", len(total_list), len([p for p in total_list if len(p[0]) < 35])
+    # return total_list
     
 def tweets(request):
     template_file = "tweets.html"
@@ -81,40 +78,39 @@ def tweets(request):
     wondering_why_list = fetch("wondering why")
     hoping_for_list = fetch("hoping for")
     
-    tweets = zip(waiting_for_list, 
-                 looking_at_list, 
-                 thinking_about_list, 
+    tweets = zip(waiting_for_list,
+                 looking_at_list,
+                 thinking_about_list,
                  wondering_why_list,
                  hoping_for_list)
     
     print tweets                              
-    
     tweets.reverse()
     
     template_values = {
         "tweets" : tweets
     }
     
-    #random_stanzas(request)
+    # random_stanzas(request)
     
     return render_to_response(template_file, template_values)
 
 def load_stanza(stanza_searches):
     search_results = []
-    
+        
     for search_group in stanza_searches:
         group_list = []
         for search_phrase in search_group: 
-            phrase_list = [(search_phrase, phrase, user, tweet_id) for (phrase, user, tweet_id) in fetch(search_phrase)]
-            
+            phrase_list = [(search_phrase, phrase, user, tweet_id) for (phrase, user, tweet_id) in fetch(search_phrase)]            
             if len(search_group) < 5:
                 phrase_list += [(search_phrase, phrase, user, tweet_id) for (phrase, user, tweet_id) in fetch(search_phrase, 2)]
             group_list += short_filter(phrase_list)
         random.shuffle(group_list)
+                
         # diagnostics
-        #print group_list[0], len(group_list)
+        # print group_list[0], len(group_list)
         search_results.append(group_list)
-        
+    print search_results
     return zip(*search_results)
 
 def transit(request):
@@ -185,20 +181,34 @@ def random_stanzas(request, title, search_terms):
                 
     if not tweet_phrases:
         tweet_phrases = load_stanza(search_terms)
-        cache.set(title, tweet_phrases, 60*35)
+        cache.set(title, tweet_phrases, 60 * 35)
         print "Loaded cache, size: %s" % len(tweet_phrases)
     
-    page = page % (len(tweet_phrases)/page_size)    
-    start = page*page_size
-    end = (page+1)*page_size
+    page = page % (len(tweet_phrases) / page_size)    
+    start = page * page_size
+    end = (page + 1) * page_size
     
     template_values = {
         "tweet_phrases" : tweet_phrases[start:end]
     }
-    
-    print "Calling random stanzas! len: %s page: %s start: %s end: %s" % (len(tweet_phrases), page, start, end)
         
+    print "Calling random stanzas! len: %s page: %s start: %s end: %s" % (len(tweet_phrases), page, start, end)    
     return render_to_response("random_tweets.html", template_values)
+
+#Concatenating tweeters and poem lines
+#Tweeting them out again if they're less than 160 characters
+def tweet_it_out(poems):
+    for poem in poems:
+        tweeters = ''
+        lines = ''
+        for line in poem:
+            tweeters += '@' + line[2]
+            lines += line[0] + ' ' + line[1] + '. '
+        tweet = tweeters + ': ' + lines
+        print tweet
+        twitter = shake_hands()
+        #if(len(tweet)<=160):
+            #twitter.status(tweet)
     
 def political_statements(request):
     
@@ -212,7 +222,7 @@ def political_statements(request):
 def relationship_statements(request):
     
     search_terms = [
-        ["my boss is", "my manager is", "my employee is", "my coworker is", 
+        ["my boss is", "my manager is", "my employee is", "my coworker is",
         "my wife is", "my husband is", "my spouse is", "my partner is",
         "my brother is", "my sister is", "my son is", "my daughter is", "my child is",
         "my father is", "my mother is",
@@ -224,7 +234,7 @@ def relationship_statements(request):
 def comparison_statements(request):
     
     search_terms = [
-        ["similar to", "not unlike", "like a", "some call it", 
+        ["similar to", "not unlike", "like a", "some call it",
         "bigger than a", "smaller than a"]
     ]
     
@@ -314,7 +324,7 @@ def street(request, title="transit"):
     
 def projection(request, title="transit"):
     
-    title_index = random.randint(0,2)
+    title_index = random.randint(0, 2)
     
     if title_index == 0:
         title = "transit"
@@ -390,7 +400,7 @@ def add_best(request):
     except IntegrityError:
         pass
     
-    #return show_best(request);
+    # return show_best(request);
     return HttpResponseRedirect(reverse('multiverse.app.views.show_best'))
 
 def show_best(request):
@@ -408,17 +418,17 @@ def show_best(request):
     elif (page < 9):
         smart_range = range(1, 10)
         smart_range.append("...")
-        smart_range.extend(range(num_pages-2, num_pages+1))
+        smart_range.extend(range(num_pages - 2, num_pages + 1))
     elif (page > num_pages - 8):
         smart_range = range(1, 4)
         smart_range.append("...")
-        smart_range.extend(range(num_pages-8, num_pages+1))
+        smart_range.extend(range(num_pages - 8, num_pages + 1))
     else:
         smart_range = range(1, 4)
         smart_range.append("...")
-        smart_range.extend(range(page-3, page+4))
+        smart_range.extend(range(page - 3, page + 4))
         smart_range.append("...")
-        smart_range.extend(range(num_pages-2, num_pages+1))
+        smart_range.extend(range(num_pages - 2, num_pages + 1))
     
     template_values = {
         "stanzas" : stanzas,
