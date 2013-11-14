@@ -300,6 +300,14 @@ function cycleCustom(animation, search_one, search_two, search_three, page) {
 	}
 }
 
+function fadeInOut(element) {
+	element.fadeIn(10000, function(){
+		element.fadeOut(5000, function(){
+			fadeInOut(element);
+		})
+	})
+}
+
 function cycleRandom(title, animation, page) {
 	if ($('div.stanza').length > 0) {
 	    animation($('div.stanza:first'), function() {
@@ -307,11 +315,14 @@ function cycleRandom(title, animation, page) {
             cycleRandom(title, animation, page);
         });
 	} else {
+		var loading = $("<div>").attr("id", "loading").text("Collecting Tweets...").prependTo($("body"));
+		fadeInOut(loading);
 	    if (page === 1000) return;
 	    var query = "?page=" + page;
 	    page += 1;
 		$('#poem').load('/' + title + '.html' + query, function(responseText, textStatus) {
 			$('div.stanza').css({opacity:0, 'display':'none'});
+			loading.fadeOut("fast", function(){ loading.remove(); });
 			cycleRandom(title, animation, page);
 		});
 	}
