@@ -14,6 +14,7 @@ from django.db import IntegrityError
 
 import urllib
 import simplejson
+import json
 import re
 import random
 
@@ -21,6 +22,7 @@ import base64
 import httplib
 
 import tweepy
+
 from multiverse.app.models import Stanza
 
 def shake_hands(phrase):
@@ -35,6 +37,7 @@ def shake_hands(phrase):
     auth.set_access_token(access_token, access_token_secret)
 
     api = tweepy.API(auth)    
+
     return api.search(q=phrase, rpp=100)
 
 
@@ -118,7 +121,6 @@ def load_stanza(stanza_searches):
     return zip(*search_results)
 
 def transit(request):
-    
     search_terms = [
         ["On my way", "Walking around", "Walking to", "Walking from", "Running towards", "Running to", "Running from", "Heading uptown", "Heading downtown"],
         ["wondering why", "wondering if", "hoping for", "looking for", "looking around", "wondering about", "yearning for", "longing for", "desperate for", "waiting for", "waiting around for", "feeling like"],
@@ -182,7 +184,8 @@ def random_stanzas(request, title, search_terms):
     else:
         request.session[title] = page + 1
         tweet_phrases = cache.get(title)
-                
+    
+    #If there are no tweets, go get more and cache them            
     if not tweet_phrases:
         tweet_phrases = load_stanza(search_terms)
         cache.set(title, tweet_phrases, 60*35)
@@ -198,6 +201,9 @@ def random_stanzas(request, title, search_terms):
     
     print "Calling random stanzas! len: %s page: %s start: %s end: %s" % (len(tweet_phrases), page, start, end)
         
+    if 'json' in request.GET:
+        return HttpResponse(json.dumps(tweet_phrases), content_type="application/json")
+
     return render_to_response("random_tweets.html", template_values)
     
 def political_statements(request):
@@ -309,8 +315,11 @@ def street(request, title="transit"):
         "animation" : "fountain",
         "page" : request.session.get(title, 0)
     }
+
+    print request.session.get(title, 0)
+    print template_values
     
-    return render_to_response("streetcycle.html", template_values, context_instance=RequestContext(request))
+    return render_to_response("streetcycle.html", template_values)
     
 def projection(request, title="transit"):
     
@@ -329,6 +338,8 @@ def projection(request, title="transit"):
         "animation" : "projectionAnimation",
         "page" : request.session.get(title, 0)
     }
+    
+    print template_values['page']
     
     return render_to_response("projection.html", template_values)
     

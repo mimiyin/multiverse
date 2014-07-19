@@ -1,6 +1,7 @@
 # Django settings for myproject project.
+import os
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -8,6 +9,8 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 #DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 #DATABASE_NAME = '/home/capps/webapps/multiverse/multiverse/django.db'             # Or path to database file if using sqlite3.
@@ -19,7 +22,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/capps/webapps/multiverse/multiverse/django.db',                      # Or path to database file if using sqlite3.
+        'NAME': PROJECT_PATH + '/django.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -30,7 +33,7 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': 'file:///home/capps/webapps/multiverse/multiverse/django_cache',
+        'LOCATION': 'file:///' + PROJECT_PATH + '/django_cache',
     }
 }
 
@@ -108,7 +111,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_DIRS = (
-    '/home/capps/webapps/multiverse/multiverse/templates'
+    PROJECT_PATH + '/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
