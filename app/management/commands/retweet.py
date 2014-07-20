@@ -15,9 +15,9 @@ height = 440
 scale = .5
 margin = 40*scale
 ratio = .95
-lg = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 100)
-med = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 50)
-sm = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 25)
+lg = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 96)
+med = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 36)
+sm = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 24)
 
 def shake_hands():
     consumer_key = 'uKC3vb6nLTrwFQN4A1MM6yXtr'
@@ -49,7 +49,7 @@ def process(sets):
     for set in sets:
         poems.extend(set)
     total = len(poems)
-    interval = int((1*60*60)/total)
+    interval = int((24*60*60)/total)
     random.shuffle(poems)
     for p,poem in enumerate(poems):
         pm = { 'tweeters' : [], 'lines' : [] }
@@ -61,18 +61,18 @@ def process(sets):
             line = line[0] + " " + line[1]  
             lines.append((line, lg.getsize(line)))                        
         max_line = max(lines, key=lambda item:item[1])[0]
-        font = resize(lg, max_line, 100)
+        font = resize(lg, max_line, 96)
         
-        lh = 0
+        lh = margin
         for l, line in enumerate(poem):
             pm['tweeters'].append('@' + line[2])
             ln = line[0] + " " + line[1]
-            draw.text((margin,lh + margin), ln, fill=(256,256,256), font=font)
+            draw.text((margin,lh), ln, fill=(256,256,256), font=font)
             this_lh = font.getsize(ln)[1]
             lh += this_lh + margin
             
         tweeters = (' ').join(pm['tweeters'])
-        draw.text((margin,lh + margin*2), tweeters, fill=(128,128,128), font=resize(med, tweeters, 50))
+        draw.text((margin,lh), tweeters, fill=(128,128,128), font=med)
         wm = 'http://multivers.es'
         wm_size = sm.getsize(wm)
         draw.text((width-wm_size[0]-margin,height-wm_size[1]-margin), wm, fill=(128,128,128), font=sm)
@@ -80,7 +80,7 @@ def process(sets):
         img_file = PROJECT_PATH + '/static/images/tweet.png'
         img.save(img_file, 'PNG')
         #twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters)
-        time.sleep(interval)
+        time.sleep(1800)
 
 class Command(BaseCommand):
     
@@ -89,9 +89,9 @@ class Command(BaseCommand):
             # make a request
             titles = ['transit', 'contemplation', 'aspiration']
             for t,title in enumerate(titles):
-                r = requests.get('http://127.0.0.1:8000/' + title + '.html', params={ 'json' : 1, 'page' : 0 })
+                r = requests.get('http://127.0.0.1:8000/' + title + '.html', params={ 'load' : 1, 'json' : 1, 'page' : 0 })
                 set = r.json()
-                print set
                 sets.append(set)
+                print str(t) + ': ' + str(len(set))
                 if(len(sets) == 3):
                     process(sets)

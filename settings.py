@@ -147,7 +147,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'multiverse.app',
-    'sekizai'
+    'sekizai',
+    'emoji'
 ) 
 
 

@@ -77,10 +77,12 @@ urlpatterns = patterns('',
     (r'^lines/$', 'multiverse.app.views.three_lines'),
     
     (r'^robots\.txt$',  TemplateView.as_view( template_name ='robots.txt')),   
-    
+        
     (r'^js/(.*)', serve,   
         {'document_root': os.path.join(os.path.dirname(__file__), "static")}),
     (r'^css/(.*)', serve,   
         {'document_root': os.path.join(os.path.dirname(__file__), "static")}),    
+    #urls for emoji
+    (r'^emoji/', include('emoji.urls')),
 )
 

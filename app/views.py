@@ -40,15 +40,17 @@ def shake_hands(phrase):
 
     return api.search(q=phrase, rpp=100)
 
-
-
 def screen(alist):
     exp = re.compile(r'twitter|tweet|http|facebook|nigger|nigga|cunt|@|#|followers|rt|<3|lol', re.IGNORECASE)
     return [(text,user,tweet_id) for (text,user,tweet_id) in alist if not exp.search(text)]
-    
+
+# Removing emoji
+from emoji import Emoji
 def decode(txt):
+    txt = Emoji.replace_unicode(txt)
+    txt= re.sub('<img.*>', '', txt)
     return txt.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&').replace('&quot;', '"').replace('&#39;', "'")
-    
+
 def phrase_list(phrase, clean_list):
     exp = re.compile(phrase + r' ([^,.!?:;()=~-]+)', re.IGNORECASE)
     return [(m.group(1),user,tweet_id) for (m,user,tweet_id) in [(exp.search(item),user,tweet_id) for (item,user,tweet_id) in clean_list] if m]
