@@ -306,7 +306,7 @@ function cycleRandom(title, animation, page) {
             cycleRandom(title, animation, page);
         });
 	} else {
-		var loading = $("<div>").attr("id", "loading").text("Collecting Tweets...").prependTo($("body"));
+		var loading = $("<div>").attr("id", "loading").text("...Collecting Tweets...").prependTo($("body"));
 		fadeInOut(loading);
 	    if (page === 1000) return;
 	    var query = "?page=" + page;
