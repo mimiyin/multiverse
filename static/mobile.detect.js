@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	if(!$.browser.mobile)
-		$("body").css("background", "url(/css/screen.png)");
+	if($.browser.mobile)
+		$("#screen").remove();
 });
 	
 

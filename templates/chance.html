@@ -1,20 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+{% extends "base.html" %}
+{% load sekizai_tags  %}
 
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Multiverse on The Highline</title>
-	<meta name="author" content="Katie Parlante">
-	
-	<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>
-	<link href="/css/highline.css" rel="stylesheet" type="text/css"/>
-	<link href="/css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" type="text/css"/>
+{% block body %}
 
-	<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
-	<script type="text/javascript" src="/js/jquery-ui-1.8.14.custom.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.bxSlider.min.js"></script>
-	<script type="text/javascript" src="/js/mobile.detect.js"></script>
+	{% addtoblock "js" %}<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>{% endaddtoblock %}
+	{% addtoblock "js" %}<script type="text/javascript" src="/js/jquery-ui-1.8.14.custom.min.js"></script>{% endaddtoblock %}
+	{% addtoblock "js" %}<script type="text/javascript" src="/js/jquery.bxSlider.min.js"></script>{% endaddtoblock %}
 	
 	<script type='text/javascript'>
 	$(document).ready(function(){
@@ -44,27 +35,8 @@
 	  $('.thumbs a:first').addClass('pager-active');
 
 	});
-	
-	
 	</script>
-</head>
 
-<body>
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=131950203487112";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-	<div id="top">
-	<h1><a href="/">MULTIVERSE ON THE HIGHLINE</a></h1>
-	<p>3 STRANGERS : 3 TWEETS : 1 ACCIDENTAL POEM</p>
-	<p><a href="/transit/">TRANSIT</a> : <a href="/contemplation/">CONTEMPLATION</a> : <a href="/aspiration/">ASPIRATION</a></p>
-	</div>
 	<div id="about">
 		<div id=follow>Follow us on <a href="https://twitter.com/multivers_es">Twitter</a> : <a href=https://www.facebook.com/pages/Multiverse/244836708970327>Facebook</a><span class="fb-like" data-href="http://multivers.es/" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></span></div>
 		<div id=carouselContainer>
@@ -119,5 +91,4 @@
 		
 	</div>
 
-</body>
-</html>
+{% endblock %}

@@ -12,7 +12,21 @@ body {
 	background-color: #000;
 	padding: 0;
 	margin: 0;
+	float: left;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
 	text-align: center;
+}
+
+#screen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: -1;
 }
 
 #top {
@@ -79,12 +93,9 @@ p {
 }
 
 #poem, #best {
-	float: left;
-	clear: both;
 	color: white;
-	width: auto;
 	text-align: left;
-	margin-bottom: 50px;
+	margin: 35vh auto;
 }
 
 #best {
@@ -129,12 +140,13 @@ p {
 	position: absolute;
 	top:  275px;
 	color: white;
-	font-size: 1.5em;
+	font-size: 5vw;
 }
 
 div.stanza {
     font-family: "Georgia", "Georgia", serif;
     font-size: 24px;
+    font-size: 3.5vw;
     z-index: 1;
     margin-bottom: 30px;
 }

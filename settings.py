@@ -11,6 +11,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+print PROJECT_PATH
 
 #DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 #DATABASE_NAME = '/home/capps/webapps/multiverse/multiverse/django.db'             # Or path to database file if using sqlite3.
@@ -145,8 +146,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'multiverse.app'
-)
+    'multiverse.app',
+    'sekizai'
+) 
+
 
 #Comment this out when updating server
 #from settings_local import *

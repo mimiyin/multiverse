@@ -128,8 +128,6 @@ function projectionAnimation(element, callback) {
 	
 	var newWidth = element.width();
 	
-	var autoLeft = ($(document).width() - newWidth)*.5;
-	var leftMargin = autoLeft >=100 ? autoLeft : 100;
 
 	if(newWidth > 1700)
 		newWidth = 1700;
@@ -180,16 +178,9 @@ function projectionAnimation(element, callback) {
 }
 
 function fountain(element, callback) {
-  
-    // TODO: reconsider below
-    var newWidth = element.width();
-    var autoLeft = ($(document).width() - newWidth)*.5;
-    var leftMargin = autoLeft >=0 ? autoLeft + 10 : 10;
-  
+    
     $('#poem').css({
-        'width' : newWidth,
-        'margin-left' : leftMargin,
-        'margin-top'  : $(document).height()*.33,	
+        'width' : element.width(),
     });
 
     $('#poem').find('.phrase').css('white-space','nowrap');
@@ -325,6 +316,26 @@ function cycleRandom(title, animation, page) {
 			loading.fadeOut("fast", function(){ loading.remove(); });
 			cycleRandom(title, animation, page);
 		});
+	}
+    
+}
+
+function cycleSelect(animation) {
+	if ($('div.stanza').length > 0) {
+	    animation($('div.stanza:first'), function() {
+            $('div.stanza:first').remove();
+            cycleSelect(animation);
+        });
+	} else {
+		var loading = $("<div>").attr("id", "loading").text("Select Poems...").prependTo($("body"));
+		fadeInOut(loading);
+		setTimeout(function(){
+			$('#poem').load('/select.html', function(responseText, textStatus) {
+				$('div.stanza').css({opacity:0, 'display':'none'});
+				loading.fadeOut("fast", function(){ loading.remove(); });
+				cycleSelect(animation);
+			});
+		}, 2500)
 	}
     
 }

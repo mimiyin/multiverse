@@ -120,6 +120,9 @@ def load_stanza(stanza_searches):
         
     return zip(*search_results)
 
+def select(request):
+    return select_stanzas(request)
+
 def transit(request):
     search_terms = [
         ["On my way", "Walking around", "Walking to", "Walking from", "Running towards", "Running to", "Running from", "Heading uptown", "Heading downtown"],
@@ -168,10 +171,10 @@ def explore(request):
     ]
     
     return random_stanzas(request, "explore", search_terms)
-    
+
 def random_stanzas(request, title, search_terms):
     print request.GET
-    
+
     page = int(request.GET['page'])
     if 'size' in request.GET:
         page_size = int(request.GET['size'])
@@ -204,6 +207,22 @@ def random_stanzas(request, title, search_terms):
     if 'json' in request.GET:
         return HttpResponse(json.dumps(tweet_phrases), content_type="application/json")
 
+    return render_to_response("random_tweets.html", template_values)
+
+import os
+def select_stanzas(request):
+    PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+    poems = []
+    lines = open(PROJECT_PATH + '/select.txt').readlines()
+    for l,line in enumerate(lines):
+        index = int(l/4)
+        if len(poems) <= index:
+            poems.append([])
+        poems[index].append(line.split(':'))        
+
+    template_values = {
+            "tweet_phrases" : poems
+    }
     return render_to_response("random_tweets.html", template_values)
     
 def political_statements(request):
@@ -319,8 +338,8 @@ def street(request, title="transit"):
     print request.session.get(title, 0)
     print template_values
     
-    return render_to_response("streetcycle.html", template_values)
-    
+    return render_to_response("streetcycle.html", template_values, context_instance=RequestContext(request))
+
 def projection(request, title="transit"):
     
     title_index = random.randint(0,2)
@@ -444,12 +463,12 @@ def show_best(request):
 def about(request):
     template_values = {
     }
-    return render_to_response("about.html", template_values)
+    return render_to_response("about.html", template_values, context_instance=RequestContext(request))
 
 def chance(request):
     template_values = {
     }
-    return render_to_response("chance.html", template_values)
+    return render_to_response("chance.html", template_values, context_instance=RequestContext(request))
 
 def animation_lab(request):
     template_file = "animation.html"

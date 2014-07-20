@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     (r'^(?P<title>contemplation)/$', 'multiverse.app.views.street'),
     (r'^(?P<title>aspiration)/$', 'multiverse.app.views.street'),
     (r'^(?P<title>explore)/$', 'multiverse.app.views.street'),
+    (r'^(?P<title>selections)/$', 'multiverse.app.views.street'),
 
     (r'^14thstreet/add/$', 'multiverse.app.views.add_best'),
     (r'^add/$', 'multiverse.app.views.add_best'),
@@ -50,7 +51,8 @@ urlpatterns = patterns('',
     (r'^projection/(?P<title>contemplation)/$', 'multiverse.app.views.projection'),
     (r'^projection/(?P<title>aspiration)/$', 'multiverse.app.views.projection'),
     (r'^projection/(?P<title>office)/$', 'multiverse.app.views.projection'),
-    
+
+    (r'^select\.html$', 'multiverse.app.views.select'),    
     (r'^transit\.html$', 'multiverse.app.views.transit'),
     (r'^contemplation\.html$', 'multiverse.app.views.contemplation'),
     (r'^aspiration\.html$', 'multiverse.app.views.aspiration'),

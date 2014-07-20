@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN http://www.w3.org/TR/html4/strict.dtd">
+{% load sekizai_tags %}
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="google-site-verification" content="p2fE2RWpJ5f31wJpurwo-YP5oVkK4qAwgVXS269rY-8" />
+	<meta name="google-site-verification" content="qc70ZIdtk4oqFKFQmHdsFEF-IrWEMGdcwLXwR70jjxA" />
+	{% addtoblock "css" %}<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>{% endaddtoblock %}
+	{% addtoblock "css" %}<link href="/css/highline.css" rel="stylesheet" type="text/css"/>{% endaddtoblock %}
+	
+	{% addtoblock "js" %}<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>{% endaddtoblock %}
+	{% addtoblock "js" %}<script type="text/javascript" src="/js/madtwitter.js"></script>{% endaddtoblock %}
+	{% addtoblock "js" %}<script type="text/javascript" src="/js/mobile.detect.js"></script>{% endaddtoblock %}
+	
+	{% render_block "css" %}
+	{% render_block "js" %}
+	{% block head %}{% endblock %}				
+	<title>{% block title %}Multiverse{% endblock %}</title>
+	</head>
+	
+	<body>	
+		<img id="screen" src='/css/screen.png'>
+		<div id="top">
+		<h1><a href="/">MULTIVERSE ON THE HIGHLINE</a></h1>
+		<p>3 STRANGERS : 3 TWEETS : 1 ACCIDENTAL POEM</p>
+		<p><a id="transit" href="/transit/">TRANSIT</a> : <a id="contemplation" href="/contemplation/">CONTEMPLATION</a> : <a id="aspiration" href="/aspiration/">ASPIRATION</a> : <a id="selections" href="/selections/">SELECTIONS</a></p>
+		</div>
+		
+		{% block body %}
+		
+		{% endblock %}			
+				
+		<div id="fb-root"></div>
+		<script>
+			$(document).ready(function(){
+				$("#screen").load(function(){
+					$("#screen").fadeTo(2500, 1);
+				});
+			});
+			
+			(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=131950203487112";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+	
+		<div id="bottom">
+			<p><a href="/about/">About</a> : <a href="/chance/">Chance Encounters on The Highline</a> <span class="fb-like" data-href="http://multivers.es/" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></span>
+			<br>Follow us on <a href="https://twitter.com/multivers_es">Twitter</a> : <a href=https://www.facebook.com/pages/Multiverse/244836708970327>Facebook</a>
+			</div>	
+	</body>
+		
+</html>

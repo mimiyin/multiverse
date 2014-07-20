@@ -79,8 +79,7 @@ def process(sets):
         img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)
         img_file = PROJECT_PATH + '/static/images/tweet.png'
         img.save(img_file, 'PNG')
-        print tweeters
-        twitter.update_with_media(img_file, 'http://multivers.es ' + tweeters)
+        #twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters)
         time.sleep(interval)
 
 class Command(BaseCommand):
@@ -92,6 +91,7 @@ class Command(BaseCommand):
             for t,title in enumerate(titles):
                 r = requests.get('http://127.0.0.1:8000/' + title + '.html', params={ 'json' : 1, 'page' : 0 })
                 set = r.json()
+                print set
                 sets.append(set)
                 if(len(sets) == 3):
                     process(sets)
