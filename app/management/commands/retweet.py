@@ -79,7 +79,7 @@ def process(sets):
         img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)
         img_file = PROJECT_PATH + '/static/images/tweet.png'
         img.save(img_file, 'PNG')
-        #twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters)
+        twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters)
         time.sleep(1800)
 
 class Command(BaseCommand):
