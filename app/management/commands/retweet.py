@@ -7,7 +7,6 @@ import requests
 from PIL import Image, ImageFont, ImageDraw
 
 import tweepy
-import multiverse.app.auth
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 width = 880
