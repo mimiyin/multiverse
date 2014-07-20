@@ -78,7 +78,7 @@ def process(sets):
         img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)
         img_file = PROJECT_PATH + '/static/images/tweet.png'
         img.save(img_file, 'PNG')
-        twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters)
+        twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters + ' #tweetpoem')
         time.sleep(1800)
 
 class Command(BaseCommand):
@@ -88,7 +88,7 @@ class Command(BaseCommand):
             # make a request
             titles = ['transit', 'contemplation', 'aspiration']
             for t,title in enumerate(titles):
-                r = requests.get('http://multivers.es/' + title + '.html', params={ 'load' : 1, 'json' : 1, 'page' : 0 })
+                r = requests.get('http://127.0.0.1:8000/' + title + '.html', params={ 'load' : 1, 'json' : 1, 'page' : 0 })
                 set = r.json()
                 sets.append(set)
                 print str(t) + ': ' + str(len(set))
