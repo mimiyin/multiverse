@@ -49,6 +49,7 @@ def process(sets):
         poems.extend(set)
     total = len(poems)
     interval = int((24*60*60)/total)
+    print "INTERVERAL: " + str(interval)
     random.shuffle(poems)
     for p,poem in enumerate(poems):
         pm = { 'tweeters' : [], 'lines' : [] }
@@ -78,8 +79,8 @@ def process(sets):
         img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)
         img_file = PROJECT_PATH + '/static/images/tweet.png'
         img.save(img_file, 'PNG')
-        twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters + ' #tweetpoem')
-        time.sleep(1800)
+        #twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
+        time.sleep(interval)
 
 class Command(BaseCommand):
     
