@@ -1,5 +1,8 @@
 import sys
 import os
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -18,39 +21,20 @@ lg = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 96)
 med = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 36)
 sm = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', 24)
 
-def shake_hands():
-    consumer_key = 'uKC3vb6nLTrwFQN4A1MM6yXtr'
-    consumer_secret = 'r99uNe9JPeThrV2Iyqq7fyEaHP9BKJ5eU1EAqmy5raQX37R33k'
-    
-    access_token="755697409-YxhFvvk3ETcGsoV9daOOEHrdkDM9473zTXZ7tEWt"
-    access_token_secret="zjeRi7dqZGypYdAzCqpf4qY73Pb5a7zjFMKU5kuwrAqiG"
-    
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-            
-    return tweepy.API(auth) 
-
-twitter = shake_hands()
-
 def resize(font, txt, sz):
     while(font.getsize(txt)[0] > ratio*width):
         sz-=1
         font = ImageFont.truetype(PROJECT_PATH + '/static/fonts/times.ttf', sz)
     return font
 
-import time
 import random               
 def process(sets):
     # make images for each poem
-    count = 0
     poems = []
-    timers = []
     for set in sets:
         poems.extend(set)
-    total = len(poems)
-    interval = int((24*60*60)/total)
-    print "INTERVERAL: " + str(interval)
     random.shuffle(poems)
+    tweeters_list = []
     for p,poem in enumerate(poems):
         pm = { 'tweeters' : [], 'lines' : [] }
         img = Image.new('RGB', (width, height))
@@ -72,26 +56,57 @@ def process(sets):
             lh += this_lh + margin
             
         tweeters = (' ').join(pm['tweeters'])
+        tweeters_list.append(tweeters)
         draw.text((margin,lh), tweeters, fill=(128,128,128), font=med)
         wm = 'http://multivers.es'
         wm_size = sm.getsize(wm)
         draw.text((width-wm_size[0]-margin,height-wm_size[1]-margin), wm, fill=(128,128,128), font=sm)
         img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)
-        img_file = PROJECT_PATH + '/static/images/tweet.png'
+        
+        tweeters_key = ('').join(pm['tweeters'])
+        img_file = PROJECT_PATH + '/static/images/tweet_' + tweeters_key + '.png'
         img.save(img_file, 'PNG')
-        twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
-        time.sleep(interval)
+        cache.set(tweeters_key, img_file, 24*60*60)
+        print cache.get(tweeters_key)
+    cache.set('tweeters', tweeters_list, 24*60*60)
+    print cache.get('tweeters')
 
-class Command(BaseCommand):
+def collect_tweets():
+    sets = []
+    # make a request
+    titles = ['transit', 'contemplation', 'aspiration']
+    for t,title in enumerate(titles):
+        r = requests.get('http://multivers.es/' + title + '.html', params={ 'load' : 1, 'json' : 1, 'page' : 0 })
+        set = r.json()
+        sets.append(set)
+        print str(t) + ': ' + str(len(set))
+        if(len(sets) == 3):
+            process(sets)
+
+def shake_hands():
+    consumer_key = 'uKC3vb6nLTrwFQN4A1MM6yXtr'
+    consumer_secret = 'r99uNe9JPeThrV2Iyqq7fyEaHP9BKJ5eU1EAqmy5raQX37R33k'
     
-        def handle(self, *args, **options):  
-            sets = []
-            # make a request
-            titles = ['transit', 'contemplation', 'aspiration']
-            for t,title in enumerate(titles):
-                r = requests.get('http://multivers.es/' + title + '.html', params={ 'load' : 1, 'json' : 1, 'page' : 0 })
-                set = r.json()
-                sets.append(set)
-                print str(t) + ': ' + str(len(set))
-                if(len(sets) == 3):
-                    process(sets)
+    access_token="755697409-YxhFvvk3ETcGsoV9daOOEHrdkDM9473zTXZ7tEWt"
+    access_token_secret="zjeRi7dqZGypYdAzCqpf4qY73Pb5a7zjFMKU5kuwrAqiG"
+    
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+            
+    return tweepy.API(auth) 
+
+twitter = shake_hands()
+
+class Command(BaseCommand):    
+    def handle(self, *args, **options):
+        tweeters_list = cache.get('tweeters')
+        if not tweeters_list: 
+            collect_tweets()
+        else:
+            tweeters = tweeters_list.pop()
+            tweeters_key = tweeters.replace(' ', '')
+            img_file = cache.get(tweeters_key)
+            cache.set('tweeters', tweeters_list)
+            if img_file:
+                twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
+        
