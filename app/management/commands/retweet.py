@@ -64,9 +64,10 @@ def process(sets):
         img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)
         
         tweeters_key = ('').join(pm['tweeters'])
+        print tweeters_key
         img_file = PROJECT_PATH + '/static/images/tweet_' + tweeters_key + '.png'
         img.save(img_file, 'PNG')
-        cache.set(tweeters_key, img_file, 24*60*60)
+        cache.set(tweeters_key, img_file.encode("utf8"), 24*60*60)
         print cache.get(tweeters_key)
     cache.set('tweeters', tweeters_list, 24*60*60)
     print cache.get('tweeters')
@@ -97,6 +98,7 @@ def shake_hands():
 
 twitter = shake_hands()
 
+import re
 class Command(BaseCommand):    
     def handle(self, *args, **options):
         tweeters_list = cache.get('tweeters')
@@ -104,8 +106,11 @@ class Command(BaseCommand):
             collect_tweets()
         else:
             tweeters = tweeters_list.pop()
+            print tweeters
             tweeters_key = tweeters.replace(' ', '')
+            print tweeters_key
             img_file = cache.get(tweeters_key)
+            print img_file
             cache.set('tweeters', tweeters_list)
             if img_file:
                 twitter.update_with_media(img_file, 'http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
