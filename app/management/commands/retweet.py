@@ -70,7 +70,7 @@ def retweet(poem):
     img.resize((int(width*scale),int(height*scale)), resample=Image.ANTIALIAS)   
     img_file = PROJECT_PATH + '/static/images/tweets.png'
     img.save(img_file, 'PNG')
-    shake_hands().update_with_media(img_file, tweeters + 'http://multivers.es by #tweetpoem #poem')
+    shake_hands().update_with_media(img_file, tweeters + ' http://multivers.es by #tweetpoem #poem')
 
 def collect_tweets():
     sets = []
@@ -86,10 +86,7 @@ def collect_tweets():
         sets.extend(set)
         print str(t) + ': ' + str(len(set))
         random.shuffle(sets)
-        print sets
         cache.set('retweets', sets, 60*24*24)
-        print cache.get('retweets')
-
 
 import re
 class Command(BaseCommand):    
@@ -97,5 +94,6 @@ class Command(BaseCommand):
         retweets = cache.get('retweets')
         if not retweets: 
             collect_tweets();
-        retweet(retweets.pop())
-        cache.set('retweets', retweets, 60*24*24)
+        else:
+            retweet(retweets.pop())
+            cache.set('retweets', retweets, 60*24*24)
