@@ -5,6 +5,7 @@ import time
 from django.core.management.base import BaseCommand, CommandError
 
 import tweepy
+import urllib
 
 def shake_hands():
     consumer_key = 'uKC3vb6nLTrwFQN4A1MM6yXtr'
@@ -40,8 +41,10 @@ class Command(BaseCommand):
         for user in fave.entities['user_mentions']:
             tweeters += ' @' + user['screen_name']
         img_file = fave.entities['media'][0]['media_url']
+        img_file = urllib.urlretrieve(img_file)[0]
         print '%s: %s' %(tweeters, img_file)
-        #twitter.update_with_media(img_file, 'Select http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
+        twitter.update_with_media(img_file, 'Select http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
+        os.remove(img_file)
         cache.set('faves', faves, 24*60*60)
         cache.set('since', time.time(), 24*60*60)
         print 'Length of faves %s' % len(faves)
