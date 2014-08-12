@@ -139,7 +139,7 @@ def contemplation(request):
     search_terms = [
         ["Savoring", "Enjoying", "Worrying about", "Wondering about", "Wondering if", "Wondering why", "Relishing", "Reveling in", "Angry about", "Delighting in", "Escaping to"],        
         ["eating", "drinking", "nibbling", "munching", "sipping"],
-        ["reading", "thinking about", "wishing for", "contemplating", "trying to forget", "remembering", "forgetting", "reminiscing", "recollecting"]
+        ["I find myself", "reading", "thinking about", "wishing for", "contemplating", "trying to forget", "remembering", "forgetting", "reminiscing", "recollecting"]
     ]
     
     return random_stanzas(request, "contemplation", search_terms)
