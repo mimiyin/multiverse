@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 import tweepy
 import urllib
+import os
 
 def shake_hands():
     consumer_key = 'uKC3vb6nLTrwFQN4A1MM6yXtr'
