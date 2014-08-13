@@ -24,7 +24,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         twitter = shake_hands()
         # get cached faves
-        faves = [] #cache.get('faves')
+        faves = cache.get('faves')
         if not faves:
             # get last time we checked for faves
             since = cache.get('since')
@@ -33,7 +33,7 @@ class Command(BaseCommand):
         print 'Length of faves %s' % len(faves)
         # save the faves
         fave = faves.pop()
-        cache.set('since', fave.id)
+        cache.set('since', fave.id, 24*60*60)
         tweeters = ''
         for user in fave.entities['user_mentions']:
             tweeters += ' @' + user['screen_name']
