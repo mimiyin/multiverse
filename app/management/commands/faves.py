@@ -29,7 +29,9 @@ class Command(BaseCommand):
             # get last time we checked for faves
             since = cache.get('since')
             print 'Get since: %s' % since
-            faves = twitter.favorites('multivers_es', since_id = since ) 
+            faves = twitter.favorites('multivers_es', since_id = since )
+            if len(faves) == 0:
+                return 
         print 'Length of faves %s' % len(faves)
         # save the faves
         fave = faves.pop()
@@ -43,5 +45,4 @@ class Command(BaseCommand):
         twitter.update_with_media(img_file, 'Select http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
         os.remove(img_file)
         cache.set('faves', faves, 24*60*60)
-        cache.set('since', time.time(), 24*60*60)
         print 'Length of faves %s' % len(faves)
