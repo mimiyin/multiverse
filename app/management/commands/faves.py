@@ -33,7 +33,7 @@ class Command(BaseCommand):
         print 'Length of faves %s' % len(faves)
         # save the faves
         fave = faves.pop()
-        cache.set('since', face.id)
+        cache.set('since', fave.id)
         tweeters = ''
         for user in fave.entities['user_mentions']:
             tweeters += ' @' + user['screen_name']
