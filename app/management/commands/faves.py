@@ -24,17 +24,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         twitter = shake_hands()
         # get cached faves
-        faves = cache.get('faves')
+        faves = [] #cache.get('faves')
         if not faves:
             # get last time we checked for faves
             since = cache.get('since')
             print 'Get since: %s' % since
-            if since is None:
-                since = time.time()
-                cache.set('since', since, 24*60*60)
-                print 'Set since to: %s' % since
-                return
-            faves = twitter.favorites('multivers_es', since_id = since) 
+            faves = twitter.favorites('multivers_es', since_id = since ) 
         print 'Length of faves %s' % len(faves)
         # save the faves
         fave = faves.pop()
@@ -44,7 +39,7 @@ class Command(BaseCommand):
         img_file = fave.entities['media'][0]['media_url']
         img_file = urllib.urlretrieve(img_file)[0]
         print '%s: %s' %(tweeters, img_file)
-        twitter.update_with_media(img_file, 'Select http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
+        #twitter.update_with_media(img_file, 'Select http://multivers.es by ' + tweeters + ' #tweetpoem #poem')
         os.remove(img_file)
         cache.set('faves', faves, 24*60*60)
         cache.set('since', time.time(), 24*60*60)
