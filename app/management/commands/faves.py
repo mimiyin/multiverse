@@ -30,6 +30,8 @@ class Command(BaseCommand):
             since = cache.get('since')
             print 'Get since: %s' % since
             faves = twitter.favorites('multivers_es', since_id = since )
+            print faves
+            return
             if len(faves) == 0:
                 return 
         print 'Length of faves %s' % len(faves)

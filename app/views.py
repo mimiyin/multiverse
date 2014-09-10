@@ -129,7 +129,7 @@ def transit(request):
     search_terms = [
         ["On my way", "Walking around", "Walking to", "Walking from", "Running towards", "Running to", "Running from", "Heading uptown", "Heading downtown"],
         ["wondering why", "wondering if", "hoping for", "looking for", "looking around", "wondering about", "yearning for", "longing for", "desperate for", "waiting for", "waiting around for", "feeling like"],
-        ["just saw", "just overheard", "just noticed", "just ran into", "just remembered", "just bumped into", "stumbled upon", "barely noticed"]
+        ["just saw", "just overheard", "just noticed", "just realized", "just ran into", "just remembered", "just bumped into", "stumbled upon", "barely noticed"]
     ]
     
     return random_stanzas(request, "transit", search_terms)
@@ -139,7 +139,7 @@ def contemplation(request):
     search_terms = [
         ["Savoring", "Enjoying", "Worrying about", "Wondering about", "Wondering if", "Wondering why", "Relishing", "Reveling in", "Angry about", "Delighting in", "Escaping to"],        
         ["eating", "drinking", "nibbling", "munching", "sipping"],
-        ["I find myself", "reading", "thinking about", "wishing for", "contemplating", "trying to forget", "remembering", "forgetting", "reminiscing", "recollecting"]
+        ["I find myself", "reading", "thinking about", "wishing for", "realizing", "contemplating", "trying to forget", "remembering", "forgetting", "reminiscing", "recollecting", "regretting", "ruining"]
     ]
     
     return random_stanzas(request, "contemplation", search_terms)
@@ -215,7 +215,7 @@ import os
 def select_stanzas(request):
     PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
     poems = []
-    lines = open(PROJECT_PATH + '/select.txt').readlines()
+    lines = open(PROJECT_PATH + '/aiop.txt').readlines()
     for l,line in enumerate(lines):
         index = int(l/4)
         if len(poems) <= index:
@@ -363,6 +363,30 @@ def projection(request, title="transit"):
     print template_values['page']
     
     return render_to_response("projection.html", template_values)
+
+def aiop(request, title="transit"):
+    
+    title_index = 0; #random.randint(0,3)
+    
+    if title_index == 0:
+        title = "transit"
+    elif title_index == 1:
+        title = "aspiration"
+    elif title_index == 2:
+        title = "contemplation"
+    else:
+        title = "select"
+    
+    template_values = {
+        "cycle" : "random",
+        "title" : title,
+        "animation" : "projectionAnimation",
+        "page" : request.session.get(title, 0)
+    }
+    
+    print template_values['page']
+    
+    return render_to_response("projection.html", template_values)
     
 def recent(request, title="transit"):
     
@@ -428,7 +452,7 @@ def add_best(request):
 def show_best(request):
         
     stanza_list = Stanza.objects.order_by('created')
-    paginator = Paginator(stanza_list, 10)
+    paginator = Paginator(stanza_list, 15)
     
     num_pages = paginator.num_pages
     page = int(request.GET.get('page', num_pages))

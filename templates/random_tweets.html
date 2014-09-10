@@ -1,14 +1,14 @@
 {% for tweet_stanza in tweet_phrases %}
 <div class="stanza">
-	<form action="/14thstreet/add/" method="post">
+	<form action="/add/" method="post">
 	{% for search_phrase, tweet_phrase, from_user, tweet_id in tweet_stanza %}
-	<div class="phrase line{{ forloop.counter }}">
-		<span class="search">{{ search_phrase }}</span> <span class="tweet">{{ tweet_phrase }}</span>
-	</div>
-	<input type="hidden" name="user{{ forloop.counter }}" value="{{ from_user }}"/>
-	<input type="hidden" name="search{{ forloop.counter }}" value="{{ search_phrase }}"/>
-	<input type="hidden" name="tweet{{ forloop.counter }}" value="{{ tweet_phrase }}"/>
-	<input type="hidden" name="tweet_id{{ forloop.counter }}" value="{{ tweet_id }}">
+		<div class="phrase line{{ forloop.counter }}">
+			<span class="search">{{ search_phrase }}</span> <span class="tweet">{{ tweet_phrase }}</span>
+		</div>
+		<input type="hidden" name="user{{ forloop.counter }}" value="{{ from_user }}"/>
+		<input type="hidden" name="search{{ forloop.counter }}" value="{{ search_phrase }}"/>
+		<input type="hidden" name="tweet{{ forloop.counter }}" value="{{ tweet_phrase }}"/>
+		<input type="hidden" name="tweet_id{{ forloop.counter }}" value="{{ tweet_id }}">
 	{% endfor %}
 	</form>
 </div>

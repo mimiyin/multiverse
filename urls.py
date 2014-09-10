@@ -46,6 +46,7 @@ urlpatterns = patterns('',
     (r'^37thstreet/(?P<title>aspiration)/$', 'multiverse.app.views.window'),
     (r'^37thstreet/(?P<title>office)/$', 'multiverse.app.views.window'),
     
+    (r'^aiop/$', 'multiverse.app.views.aiop'),
     (r'^projection/$', 'multiverse.app.views.projection'),
     (r'^projection/(?P<title>transit)/$', 'multiverse.app.views.projection'),
     (r'^projection/(?P<title>contemplation)/$', 'multiverse.app.views.projection'),

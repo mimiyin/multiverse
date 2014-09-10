@@ -115,44 +115,29 @@ function fadeLetter(element, callback) {
 function projectionAnimation(element, callback) {
 	
 	//Dynamically calculate width/height of poem
-	//Set margins accordingly to center poem
-		
-	// Mapping fontSize to "length" of poem as measured by its width at 64px font.
-	var width = element.width();
-	if (width < 500)
-		width = 500;
-	var fontSize = 128 - (((width-500)/1600)*48);
-	
-	
-	$('.stanza').css('font-size', fontSize);
-	
-	var newWidth = element.width();
-	
+	//Set margins accordingly to center poem	
+	var phrase = element.find(".phrase");
+	var longest = Math.max($(phrase[0]).text().length, $(phrase[1]).text().length, $(phrase[2]).text().length);
+	element.find(".phrase").css('font-size', 200/longest + 'vw');
 
-	if(newWidth > 1700)
-		newWidth = 1700;
+	// Show tweeters
+	if(element.find("input[name=user1]").val().length > 0) {
+		var tweeters = $("<div>").addClass("tweeters").text('@' + element.find("input[name=user1]").val() + ', @' + element.find("input[name=user2]").val() + ', @' + element.find("input[name=user3]").val());
+		element.append(tweeters);
+		setTimeout(function(){ tweeters.fadeTo(5000, .34) }, 1000);
+	}
 
-	console.log("Width: " + width.toString() + "\t" + "New Width: " + newWidth.toString() + "\t" + "Font Size: " + fontSize.toString());
-
-	$('#poem').css({
-		'width' : newWidth,
-		'overflow' : 'hidden',
-		'margin-left' : leftMargin,
-		'margin-top'  : $(document).height()*.33,	
-	});
-		
-
-	$('#poem').find('.phrase').css('white-space','nowrap');
-    
     element.find('.tweet, .search').each(function(){
         var html = $(this).html();
         
         $(this).data("old", html);
         $(this).html(spantext(html));
     });
+
+    $("#poem").width(element.width());
     
     var seconds = 0;
-    var holdLength = 10000;
+    var holdLength = 500;
     
     element.find("span.letter").css({opacity:0});
     element.css({opacity:1, 'display':'block'});
@@ -260,7 +245,6 @@ function fadePair(element, callback) {
     
 }
 
-
 function cycle(animation) {
 	if ($('div').length > 0) {
 	    animation($('div:first'), function() {
@@ -340,64 +324,81 @@ function cycleSelect(animation) {
     
 }
 
-function fadeHeadline(tag, dates, url, callback) {
-  var headline = $('#headline');
-  var tag = $("<div>").attr("id", "#tag").text(tag).append($("<div>").attr("id", "#dates").text(dates).css('font-size', '60px'));
-  var url = $("<div>").attr("id", "#url").text(url);
-  
-  headline
-  	.append(tag)
-  	.append(url);
-  
-  headline.show();
-  headline.css('opacity', 0);
-  headline.animate({ opacity: .99 }, 8000, function(){
-	  setTimeout( function(){ 
-		  tag.animate({ opacity: .01 },3000);
-		  url.fadeOut(8000, function(){
-			  headline.empty();
-			  headline.hide();
-			  setTimeout(callback, 2000);
-	  		});
-	  	}, 5000);
-  	});
-}
-
-function cycleProjection(title, animation, page) {
-
-  if ($('div.stanza').length > 0) {
-	    animation($('div.stanza:first'), function() {
-            $('div.stanza:first').remove();
-            cycleProjection(title, animation, page);
-        });
-	} else {
-	
-    if (page === 1000) return;
-
-    // Get poems in batches of 15
-    var query = "?size=15&page=" + page;
-    var newtitle = "";
-    if (title == "transit") {
-        newtitle = "aspiration";
-      } else if (title == "aspiration") {
-        newtitle = "contemplation";
-      } else if (title == "contemplation") {
-        newtitle = "transit";
-        page += 1;
-      }
-        
-    // Show tagline for every batch of poems
-		$("#subtitle").fadeOut("fast", function(){
-	    	fadeHeadline("3 Strangers. 3 Tweets. 1 Accidental Poem.", "Fri/Sat nights thru Oct 13", "multivers.es", function() {
-	    		$("#subtitle").fadeIn("slow", function(){
-	    			$('#poem').load('/' + title + '.html' + query, function(responseText, textStatus) {
-	                    $('div.stanza').css({opacity:0, 'display':'none'});
-	                    cycleProjection(newtitle, animation, page);
-	                  });
-	    			});	    		
-	    		});
+function fadeHeadline(callback) {
+	var mult = 500;
+	// Show tagline for every batch of poems
+	$("#subtitle").fadeOut("fast", function(){
+		$('#url')
+			.fadeTo(2.5*mult, 1, function(){
+				$("#headline").fadeTo(5*mult, 1, function(){
+					setTimeout(function() {
+					  	$("#headline").fadeTo(1*mult, 0, function(){
+					  		$("#url").fadeTo(2.5*mult, 0, function(){
+								$("#subtitle").fadeIn("slow", callback || null);
+					  		});
+						});
+					}, 5*mult);
+				});
 			});
-    	}
+		});
 }
+
+function cycleProjection(animation, page) {
+	var numPoems = $('div.stanza').length;
+
+	var cycle = function() {
+		var rand = Math.floor(Math.random()*numPoems);
+		console.log("RAND", rand, numPoems);
+	    animation($($('div.stanza')[rand]), function() {
+	        $($('div.stanza')[rand]).remove();
+	        cycleProjection(animation, page);
+	    });		
+	}
+
+	if (numPoems > 0) {
+		if(numPoems%10 == 0) {
+			fadeHeadline(function(){
+				cycle();
+			});
+		}
+		else {
+			cycle();
+		}
+	} 
+	else {	
+	    fadeHeadline(function(){
+	    	console.log("herro");
+	    	var query = '';
+    		var titles = [ 'select' ];
+    		var tights = {};
+    		var ready = 0;
+    		$.each(titles, function(t,title){
+    			var hold = $("<div>").attr("id", title).appendTo($("#hold"));
+				hold.load('/' + title + '.html' + query, function(responseText, textStatus) {
+					if(textStatus == "error") {
+						titles.splice(t, 1);
+						console.log(titles);
+					}
+					else {
+						console.log("HELLO");
+						console.log(title, $('div.stanza').length);
+						if(!(title in tights)) {
+							ready++;
+						}
+						tights[title] = true;
+						if( ready >= titles.length ) {
+							console.log("TITLE", title, ready);
+							$('#hold .stanza').appendTo($("#poem"));
+		                	cycleProjection(animation, page);
+						}
+					}
+				});
+	        });
+    	}); 
+    }  
+}
+
+  
+
 
 

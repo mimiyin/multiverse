@@ -13,7 +13,7 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
-		cycleProjection("{{ title }}", {{ animation }}, {{ page }});
+		cycleProjection({{ animation }}, {{ page }});
 		
 		$("#add").click(function(e){
 			e.preventDefault();
@@ -38,53 +38,79 @@
 		    margin:0;
 		    padding:0;
 		}
-		
+
 		div.stanza {
 		    font-family: "Georgia", serif;
-		    font-size: 64px;
+		    font-size: 5vw;
 		    margin: 30px 0;
 		    padding: 0;
+		    display: none;
+		    opacity: 0;
+		}
+
+		div.phrase {
+			white-space: nowrap;
+		}
+		#hold {
+			display: none;
 		}
 
 		#poem {
-			margin-top: 200px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			height: 100vh !important;
+			margin: 0 auto !important;
+			padding: 0 1vw;
+			text-align: left;
 		}
-		
-		#headline {
-			float: left;
-			clear: both;
-			text-align: center; 
+
+		.tweeters {
+			font-size: 2vw;
+			margin-top: 1.5em;
+			opacity: 0;
+		}
+
+		#url, #headline, #subtitle {
+			position: fixed;
 			width: 100%;
-			height: auto;
-			margin-left: auto;
-			margin-right: auto;
+			text-align: center;
 			font-family: "Calibri", sans-serif;
-		    font-size: 85px;
-		    position: absolute;
-		    top: 500px
+			opacity: 0;
 		}
-		
+		#url {
+			font-size: 5vw;
+			top: 40vh;
+		}
+
+		#headline {
+			position: relative;
+			font-size: 3vw;
+		}
+
 		#subtitle {
-			position: absolute;
-			right: 120px;
-			bottom: 75px;
-			font-size: 42px;
+			bottom: 25px;
+			width: 100%;
+			text-align: right;
+			right: 25px;
+			font-size: 1.5vw;
 			opacity: .85;
 			font-family: "Calibri", sans-serif;
 		}
-		
+
 		#subtitle a {
 			color: inherit;
 			text-decoration: none;
-		}
-										
+		}										
 	</style>
 	
 </head>
 <body>
 	<div id="poem"></div>
-	<div id="headline"></div>
-	
-	<div id="subtitle">#chance1920 :: <a href="/add/" id="add">multivers.es</a> :: Poems generated live from the Twitter Public Feed.</div>
+	<div id="hold"></div>
+	<div id="url">multivers.es
+		<div id="headline">3 Strangers. 3 Tweets. 1 Accidental Poem.</div>	
+	</div>
+	<div id="subtitle">Select poems generated from the Twitter Public Feed through chance operations. See it live at http://multivers.es :: @multivers_es</div>
 </body>
 </html>
