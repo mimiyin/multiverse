@@ -367,7 +367,6 @@ function cycleProjection(animation, page) {
 	} 
 	else {	
 	    fadeHeadline(function(){
-	    	console.log("herro");
 	    	var query = '';
     		var titles = [ 'select' ];
     		var tights = {};
@@ -380,7 +379,6 @@ function cycleProjection(animation, page) {
 						console.log(titles);
 					}
 					else {
-						console.log("HELLO");
 						console.log(title, $('div.stanza').length);
 						if(!(title in tights)) {
 							ready++;
