@@ -59,10 +59,6 @@ var aiop = [
 	"hoping for a fairy tale too",
 	"just ran into an old coworker"],
 
-	["I still want some chicken",
-	"without hesitation",
-	"except if you dont like Metallica"],
-
 	["Worrying about mine",
 	"munching on some Sensations",
 	"obliterating evil into pieces"],
@@ -237,6 +233,38 @@ var aiop = [
 
 	["Walking to the busstop",
 	"longing for peace",
-	"barely noticed my boxers are backward"]
+	"barely noticed my boxers are backward"],
+
+	["I want to be today",
+	"with you",
+	"until my whole world stopped"],
+
+	["I hope so keke",
+	"without fear",
+	"except if you're me"],
+
+	["I would like to be something to someone",
+	"without question",
+	"until 9"],
+
+	["I year for your Touch",
+	"with Me",
+	"until It's left you raw"],
+
+	["Angry about something that doesn't exist",
+	"eating normal",
+	"thinking about bankruptcy"],
+
+	["Worrying about work",
+	"drinking a smoothie",
+	"wishing for a bigger booty"],
+
+	["Delighting in Him continually",
+	"munching honeystar",
+	"trying to forget someone you love"],
+
+	["I long for You",
+	"with k",
+	"except if u fuck badly"],
 ];
 

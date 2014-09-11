@@ -137,7 +137,7 @@ function projectionAnimation(element, callback) {
     $("#poem").width(element.width());
     
     var seconds = 0;
-    var holdLength = 500;
+    var holdLength = 2500;
     
     element.find("span.letter").css({opacity:0});
     element.css({opacity:1, 'display':'block'});
@@ -352,7 +352,7 @@ function cycleProjection(animation, page) {
 		var rand = Math.floor(Math.random()*numPoems);
 		console.log("RAND", rand, numPoems);
 	    animation($($('div.stanza')[rand]), function() {
-	        //$($('div.stanza')[rand]).remove();
+	        $($('div.stanza')[rand]).hide();
 	        cycleProjection(animation);
 	    });		
 	}
