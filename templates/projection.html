@@ -13,6 +13,12 @@
 	<script type="text/javascript" src="../static/aiop.js"></script>
 	
 	<script type="text/javascript">
+	
+	// Auto-reload once a day
+	setTimeout(function(){
+		window.location.reload();
+	}, 24*60*60*1000);
+
 	$(document).ready(function() {
 		$.each(aiop, function(p, poem){
 			var stanza = $(".stanza:first").clone();
