@@ -121,11 +121,11 @@ function projectionAnimation(element, callback) {
 	element.find(".phrase").css('font-size', 200/longest + 'vw');
 
 	// Show tweeters
-	if(element.find("input[name=user1]").val().length > 0) {
-		var tweeters = $("<div>").addClass("tweeters").text('@' + element.find("input[name=user1]").val() + ', @' + element.find("input[name=user2]").val() + ', @' + element.find("input[name=user3]").val());
-		element.append(tweeters);
-		setTimeout(function(){ tweeters.fadeTo(5000, .34) }, 1000);
-	}
+	// if(element.find("input[name=user1]") && element.find("input[name=user1]").val().length > 0) {
+	// 	var tweeters = $("<div>").addClass("tweeters").text('@' + element.find("input[name=user1]").val() + ', @' + element.find("input[name=user2]").val() + ', @' + element.find("input[name=user3]").val());
+	// 	element.append(tweeters);
+	// 	setTimeout(function(){ tweeters.fadeTo(5000, .34) }, 1000);
+	// }
 
     element.find('.tweet, .search').each(function(){
         var html = $(this).html();
@@ -343,20 +343,22 @@ function fadeHeadline(callback) {
 		});
 }
 
+var counter = 0;
 function cycleProjection(animation, page) {
 	var numPoems = $('div.stanza').length;
 
 	var cycle = function() {
+		counter++;
 		var rand = Math.floor(Math.random()*numPoems);
 		console.log("RAND", rand, numPoems);
 	    animation($($('div.stanza')[rand]), function() {
-	        $($('div.stanza')[rand]).remove();
-	        cycleProjection(animation, page);
+	        //$($('div.stanza')[rand]).remove();
+	        cycleProjection(animation);
 	    });		
 	}
 
 	if (numPoems > 0) {
-		if(numPoems%10 == 0) {
+		if(counter%10 == 0) {
 			fadeHeadline(function(){
 				cycle();
 			});
@@ -365,35 +367,35 @@ function cycleProjection(animation, page) {
 			cycle();
 		}
 	} 
-	else {	
-	    fadeHeadline(function(){
-	    	var query = '';
-    		var titles = [ 'select' ];
-    		var tights = {};
-    		var ready = 0;
-    		$.each(titles, function(t,title){
-    			var hold = $("<div>").attr("id", title).appendTo($("#hold"));
-				hold.load('/' + title + '.html' + query, function(responseText, textStatus) {
-					if(textStatus == "error") {
-						titles.splice(t, 1);
-						console.log(titles);
-					}
-					else {
-						console.log(title, $('div.stanza').length);
-						if(!(title in tights)) {
-							ready++;
-						}
-						tights[title] = true;
-						if( ready >= titles.length ) {
-							console.log("TITLE", title, ready);
-							$('#hold .stanza').appendTo($("#poem"));
-		                	cycleProjection(animation, page);
-						}
-					}
-				});
-	        });
-    	}); 
-    }  
+	// else {	
+	//     fadeHeadline(function(){
+	//     	var query = '';
+ //    		var titles = [ 'select' ];
+ //    		var tights = {};
+ //    		var ready = 0;
+ //    		$.each(titles, function(t,title){
+ //    			var hold = $("<div>").attr("id", title).appendTo($("#hold"));
+	// 			hold.load('/' + title + '.html' + query, function(responseText, textStatus) {
+	// 				if(textStatus == "error") {
+	// 					titles.splice(t, 1);
+	// 					console.log(titles);
+	// 				}
+	// 				else {
+	// 					console.log(title, $('div.stanza').length);
+	// 					if(!(title in tights)) {
+	// 						ready++;
+	// 					}
+	// 					tights[title] = true;
+	// 					if( ready >= titles.length ) {
+	// 						console.log("TITLE", title, ready);
+	// 						$('#hold .stanza').appendTo($("#poem"));
+	// 	                	cycleProjection(animation, page);
+	// 					}
+	// 				}
+	// 			});
+	//         });
+ //    	}); 
+ //    }  
 }
 
   

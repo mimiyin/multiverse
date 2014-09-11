@@ -7,19 +7,23 @@
 	<title>&nbsp;</title>
 	<meta name="author" content="Katie Parlante">
 	
-	<link href="/css/fountain.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
-	<script type="text/javascript" src="/js/madtwitter.js"></script>
+	<link href="../static/fountain.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="../static/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="../static/madtwitter.js"></script>
+	<script type="text/javascript" src="../static/aiop.js"></script>
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
-		cycleProjection({{ animation }}, {{ page }});
-		
-		$("#add").click(function(e){
-			e.preventDefault();
-			$('div.stanza:first form').submit();
+		$.each(aiop, function(p, poem){
+			var stanza = $(".stanza:first").clone();
+			var tweets = stanza.find(".tweet");
+			$.each(tweets, function(t, tweet){
+				$(tweet).text(poem[t]);
+			});
+			stanza.appendTo($("#poem"));
 		});
-				
+		cycleProjection(projectionAnimation);
+
 	});
 	</script>
 	
@@ -106,7 +110,13 @@
 	
 </head>
 <body>
-	<div id="poem"></div>
+	<div id="poem">
+		<div class="stanza">
+			<div class="phrase"><span class="tweet"></span></div>
+			<div class="phrase"><span class="tweet"></span></div>
+			<div class="phrase"><span class="tweet"></span></div>			
+		</div>
+	</div>
 	<div id="hold"></div>
 	<div id="url">multivers.es
 		<div id="headline">3 Strangers. 3 Tweets. 1 Accidental Poem.</div>	
